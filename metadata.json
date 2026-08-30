@@ -1,0 +1,6 @@
+{
+  "name": "UDAAN",
+  "description": "A personalized next-opportunity navigator for underprivileged youth, providing realistic, constraint-aware career roadmaps, free-first learning paths, and scholarships.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

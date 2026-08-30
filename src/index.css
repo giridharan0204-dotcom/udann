@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-serif: 'Newsreader', 'Lora', Georgia, Cambria, 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --bg-parchment: #FDFCF8;
+    --border-editorial: #E7E3DA;
+    --color-forest: #173C2C;
+    --color-terracotta: #EA580C;
+    --color-amber: #B45309;
+  }
+  
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    background-color: #FDFCF8;
+    color: #161616;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, .font-serif-heading {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Editorial Aesthetic & Typography */
+.editorial-title {
+  font-family: var(--font-serif);
+  letter-spacing: -0.025em;
+}
+
+.editorial-mono {
+  font-family: var(--font-mono);
+}
+
+.editorial-rule {
+  border-color: #E7E3DA;
+}
+
+.editorial-tag {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* 3D Depth & Perspective Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+/* 3D Card Hover Depth */
+.card-3d {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  box-shadow: 0 4px 16px -4px rgba(23, 60, 44, 0.06), 0 2px 6px -2px rgba(23, 60, 44, 0.04);
+}
+
+.card-3d:hover {
+  transform: translateY(-4px) scale(1.003);
+  box-shadow: 0 20px 32px -12px rgba(23, 60, 44, 0.12), 0 4px 12px -2px rgba(23, 60, 44, 0.06);
+}
+
+.card-3d-tilt {
+  transform: rotateX(4deg) rotateY(-4deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-3d-tilt:hover {
+  transform: rotateX(0deg) rotateY(0deg) translateY(-4px);
+}
+
+/* Floating Animations with purpose */
+@keyframes floatSubtle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+@keyframes floatSubtleDelayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-0.5deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(234, 88, 12, 0);
+  }
+}
+
+.animate-float-subtle {
+  animation: floatSubtle 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatSubtleDelayed 7s ease-in-out infinite 1.5s;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* Cartographic Journey Metaphor Styles */
+.carto-grid {
+  background-image: 
+    linear-gradient(to right, rgba(231, 227, 218, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(231, 227, 218, 0.5) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.journey-path-dashed {
+  background-image: linear-gradient(to right, #173C2C 50%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+}
+
+.journey-node {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.journey-node:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Text Size Variations */
+html[data-text-size="large"] {
+  font-size: 112.5%; /* 18px base */
+}
+
+html[data-text-size="xlarge"] {
+  font-size: 125%; /* 20px base */
+}
+
+/* High Contrast Mode */
+html[data-high-contrast="true"] {
+  --bg-primary: #FFFFFF;
+  --text-primary: #000000;
+  --border-strong: #000000;
+}
+
+html[data-high-contrast="true"] body {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+}
+
+html[data-high-contrast="true"] .bg-surface {
+  background-color: #FFFFFF !important;
+  border-color: #000000 !important;
+}
+
+html[data-high-contrast="true"] button,
+html[data-high-contrast="true"] a {
+  outline: 2px solid transparent;
+}
+
+html[data-high-contrast="true"] button:focus-visible,
+html[data-high-contrast="true"] a:focus-visible,
+html[data-high-contrast="true"] input:focus-visible,
+html[data-high-contrast="true"] select:focus-visible {
+  outline: 3px solid #000000 !important;
+  outline-offset: 2px !important;
+}
+
+/* Focus styling for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid #173C2C;
+  outline-offset: 2px;
+}
+
+/* Button & Card Microinteraction Transitions */
+button, a {
+  transition-property: color, background-color, border-color, transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Utilities */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Print Styles for Roadmap */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 12pt !important;
+  }
+  
+  header, footer, nav, .no-print, button:not(.print-include) {
+    display: none !important;
+  }
+  
+  .print-card {
+    border: 1px solid #CCCCCC !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
