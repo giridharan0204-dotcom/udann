@@ -21,11 +21,11 @@ export const Footer: React.FC<FooterProps> = ({
   setActiveView,
   hasRoadmap,
 }) => {
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   return (
-    <footer className="bg-[#161616] text-[#FDFCF8] border-t border-[#292929] mt-20 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <footer className="bg-[#161616] text-[#FDFCF8] border-t border-[#292929] mt-16 sm:mt-20 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           
           {/* Brand & Purpose */}
@@ -37,56 +37,56 @@ export const Footer: React.FC<FooterProps> = ({
               "{t.tagline}"
             </p>
             <p className="text-xs text-[#A8A29E] leading-relaxed max-w-md font-serif">
-              A free-first, low-bandwidth, and constraint-aware career navigator designed specifically for ambitious youth with limited financial resources and internet access.
+              {t.footer.mission}
             </p>
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xs bg-[#242424] text-[#E7E3DA] text-[10px] font-mono font-semibold border border-[#383838]">
               <Feather className="w-3.5 h-3.5 text-[#A7F3D0]" aria-hidden="true" />
-              <span>BUILT FOR INCLUSIVE OPPORTUNITY & DIGNITY</span>
+              <span>{t.builtAroundConstraints.toUpperCase()}</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#A8A29E] font-bold">
-              Navigation
+              {t.footer.navigation}
             </h4>
             <ul className="space-y-2 text-xs font-mono text-[#D6D3D1]">
               <li>
                 <button 
                   onClick={() => { setActiveView('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#FDFCF8] transition-colors text-left"
+                  className="hover:text-[#FDFCF8] transition-colors text-left cursor-pointer"
                   id="footer-nav-home"
                 >
-                  {t.home}
+                  {t.nav.home}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveView('explore'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#FDFCF8] transition-colors text-left"
+                  className="hover:text-[#FDFCF8] transition-colors text-left cursor-pointer"
                   id="footer-nav-explore"
                 >
-                  {t.exploreOpportunities}
+                  {t.nav.explore}
                 </button>
               </li>
               {hasRoadmap && (
                 <li>
                   <button 
                     onClick={() => { setActiveView('roadmap'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="hover:text-[#FDFCF8] transition-colors text-left"
+                    className="hover:text-[#FDFCF8] transition-colors text-left cursor-pointer"
                     id="footer-nav-roadmap"
                   >
-                    {t.myNextStep}
+                    {t.nav.myNextStep}
                   </button>
                 </li>
               )}
               <li>
                 <button 
                   onClick={() => { setActiveView('journey'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="hover:text-[#FDFCF8] transition-colors text-left"
+                  className="hover:text-[#FDFCF8] transition-colors text-left cursor-pointer"
                   id="footer-nav-journey"
                 >
-                  {t.myJourney}
+                  {t.nav.myJourney}
                 </button>
               </li>
             </ul>
@@ -95,41 +95,41 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Standards & Transparency */}
           <div className="space-y-3">
             <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#A8A29E] font-bold">
-              Trust & Accessibility
+              {t.footer.trust}
             </h4>
             <ul className="space-y-2 text-xs text-[#D6D3D1]">
               <li>
                 <button 
                   onClick={openSettings}
-                  className="hover:text-[#FDFCF8] transition-colors flex items-center gap-1.5 text-left font-mono"
+                  className="hover:text-[#FDFCF8] transition-colors flex items-center gap-1.5 text-left font-mono cursor-pointer"
                   id="footer-accessibility-btn"
                 >
                   <Accessibility className="w-3.5 h-3.5 text-[#A7F3D0]" aria-hidden="true" />
-                  <span>Accessibility Preferences</span>
+                  <span>{t.footer.accessibility}</span>
                 </button>
               </li>
               <li>
                 <button 
                   onClick={openAbout}
-                  className="hover:text-[#FDFCF8] transition-colors text-left font-mono"
+                  className="hover:text-[#FDFCF8] transition-colors text-left font-mono cursor-pointer"
                   id="footer-about-btn"
                 >
-                  About the Project
+                  {t.footer.aboutProject}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={openPrivacy}
-                  className="hover:text-[#FDFCF8] transition-colors flex items-center gap-1.5 text-left font-mono"
+                  className="hover:text-[#FDFCF8] transition-colors flex items-center gap-1.5 text-left font-mono cursor-pointer"
                   id="footer-privacy-btn"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-[#A7F3D0]" aria-hidden="true" />
-                  <span>Privacy & Zero-Tracking</span>
+                  <span>{t.footer.privacy}</span>
                 </button>
               </li>
               <li>
                 <span className="text-[10px] font-mono text-[#78716C] block pt-1">
-                  Offline Ready &bull; No cookies &bull; Low Data
+                  {t.lowData} &bull; 100% Free &bull; Zero Tracking
                 </span>
               </li>
             </ul>
@@ -138,7 +138,7 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom copyright & demo disclaimer */}
-        <div className="mt-12 pt-8 border-t border-[#292929] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#78716C]">
+        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-[#292929] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-[11px] font-mono text-[#78716C]">
           <p>© 2026 UDAAN Project. Built for inclusive career advancement.</p>
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1">

@@ -13,6 +13,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { AppLanguage, UserRoadmap, User } from '../types';
+import { translations } from '../data/translations';
 import { UdaanLogo } from './UdaanLogo';
 
 interface NavbarProps {
@@ -44,6 +45,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
+  const t = translations[language] || translations.en;
+
   const handleNav = (view: 'home' | 'roadmap' | 'explore' | 'journey') => {
     setActiveView(view);
     setMobileMenuOpen(false);
@@ -58,10 +61,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'roadmap', label: 'My Next Step' },
-    { id: 'explore', label: 'Explore' },
-    { id: 'journey', label: 'My Journey' },
+    { id: 'home', label: t.nav.home },
+    { id: 'roadmap', label: t.nav.myNextStep },
+    { id: 'explore', label: t.nav.explore },
+    { id: 'journey', label: t.nav.myJourney },
   ] as const;
 
   return (
@@ -73,13 +76,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         Skip to main content
       </a>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo */}
           <button 
             onClick={() => handleNav('home')}
-            className="flex items-center group text-left focus-visible:ring-2 focus-visible:ring-[#173C2C] p-1 rounded-sm cursor-pointer"
+            className="flex items-center group text-left focus-visible:ring-2 focus-visible:ring-[#173C2C] p-1 rounded-sm cursor-pointer shrink-0"
             aria-label="UDAAN Home"
             id="brand-logo-btn"
           >
@@ -87,12 +90,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {/* Desktop Navigation Links (ONLY 4 MAIN PAGES) */}
-          <nav className="hidden md:flex items-center gap-2" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-1.5 lg:gap-2" aria-label="Main Navigation">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                className={`relative px-4 py-2 rounded-sm text-sm font-semibold tracking-tight transition-all duration-200 ${
+                className={`relative px-3.5 py-2 rounded-sm text-xs lg:text-sm font-semibold tracking-tight transition-all duration-200 ${
                   activeView === item.id
                     ? 'bg-[#173C2C] text-[#FDFCF8] shadow-xs'
                     : 'text-[#3D3A37] hover:text-[#161616] hover:bg-[#F4F1EA]'
@@ -105,43 +108,44 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Controls Right */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             
             {/* Language Switcher */}
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setLangMenuOpen(!langMenuOpen)}
-                className="px-2.5 py-1.5 rounded-sm border border-[#DDD7CC] bg-[#FFFFFF] hover:bg-[#F4F1EA] text-xs font-mono font-medium text-[#44403C] flex items-center gap-1.5 shadow-2xs"
+                className="px-2 sm:px-2.5 py-1.5 rounded-sm border border-[#DDD7CC] bg-[#FFFFFF] hover:bg-[#F4F1EA] text-xs font-mono font-medium text-[#44403C] flex items-center gap-1 sm:gap-1.5 shadow-2xs cursor-pointer"
                 aria-label="Language selection"
+                id="language-picker-btn"
               >
                 <Languages className="w-3.5 h-3.5 text-[#173C2C]" />
-                <span className="uppercase">{language}</span>
+                <span className="uppercase font-bold">{language}</span>
                 <ChevronDown className="w-3 h-3 text-[#78716C]" />
               </button>
 
               {langMenuOpen && (
-                <div className="absolute right-0 mt-1.5 w-36 bg-[#FFFFFF] border border-[#DDD7CC] rounded-sm shadow-md py-1 z-50 animate-in fade-in duration-100 divide-y divide-[#F4F1EA]">
+                <div className="absolute right-0 mt-1.5 w-40 bg-[#FFFFFF] border border-[#DDD7CC] rounded-sm shadow-md py-1 z-50 animate-in fade-in duration-100 divide-y divide-[#F4F1EA]">
                   <button
                     onClick={() => { setLanguage('en'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between ${language === 'en' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
+                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between cursor-pointer ${language === 'en' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
                   >
                     <span>English</span>
-                    {language === 'en' && <span>✓</span>}
+                    {language === 'en' && <span className="text-[#173C2C] font-bold">✓</span>}
                   </button>
                   <button
                     onClick={() => { setLanguage('hi'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between ${language === 'hi' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
+                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between cursor-pointer ${language === 'hi' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
                   >
                     <span>हिन्दी (Hindi)</span>
-                    {language === 'hi' && <span>✓</span>}
+                    {language === 'hi' && <span className="text-[#173C2C] font-bold">✓</span>}
                   </button>
                   <button
                     onClick={() => { setLanguage('ta'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between ${language === 'ta' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
+                    className={`w-full text-left px-3 py-2 text-xs font-serif flex items-center justify-between cursor-pointer ${language === 'ta' ? 'bg-[#F4F1EA] font-bold text-[#173C2C]' : 'hover:bg-[#FAF8F5]'}`}
                   >
                     <span>தமிழ் (Tamil)</span>
-                    {language === 'ta' && <span>✓</span>}
+                    {language === 'ta' && <span className="text-[#173C2C] font-bold">✓</span>}
                   </button>
                 </div>
               )}
@@ -153,13 +157,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   type="button"
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-sm border border-[#DDD7CC] bg-[#FFFFFF] hover:bg-[#FAF8F5] text-xs font-semibold text-[#161616] shadow-2xs"
+                  className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-sm border border-[#DDD7CC] bg-[#FFFFFF] hover:bg-[#FAF8F5] text-xs font-semibold text-[#161616] shadow-2xs cursor-pointer"
                   aria-label="User profile menu"
                 >
                   <div className="w-5 h-5 rounded-full bg-[#173C2C] text-[#FDFCF8] flex items-center justify-center text-[10px] font-bold">
                     {user.name ? user.name[0].toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline-block max-w-[90px] truncate">{user.name || 'Account'}</span>
+                  <span className="hidden sm:inline-block max-w-[85px] truncate">{user.name || t.nav.account}</span>
                   <ChevronDown className="w-3 h-3 text-[#78716C]" />
                 </button>
 
@@ -170,17 +174,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </div>
                     <button
                       onClick={() => { setUserMenuOpen(false); openSettings(); }}
-                      className="w-full text-left px-3.5 py-2 text-xs font-serif hover:bg-[#FAF8F5] flex items-center gap-2 text-[#44403C]"
+                      className="w-full text-left px-3.5 py-2 text-xs font-serif hover:bg-[#FAF8F5] flex items-center gap-2 text-[#44403C] cursor-pointer"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5 text-[#57534E]" />
-                      <span>Settings & Text Size</span>
+                      <span>{t.nav.settingsAndSize}</span>
                     </button>
                     <button
                       onClick={handleLogoutClick}
-                      className="w-full text-left px-3.5 py-2 text-xs font-serif hover:bg-[#FAF8F5] text-[#B91C1C] flex items-center gap-2 border-t border-[#E7E3DA]"
+                      className="w-full text-left px-3.5 py-2 text-xs font-serif hover:bg-[#FAF8F5] text-[#B91C1C] flex items-center gap-2 border-t border-[#E7E3DA] cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
-                      <span>Log Out</span>
+                      <span>{t.nav.logOut}</span>
                     </button>
                   </div>
                 )}
@@ -190,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-sm border border-[#DDD7CC] text-[#44403C] hover:bg-[#F4F1EA]"
+              className="md:hidden p-2 rounded-sm border border-[#DDD7CC] text-[#44403C] hover:bg-[#F4F1EA] cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -207,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                className={`w-full text-left px-4 py-3 rounded-sm text-sm font-semibold transition-all ${
+                className={`w-full text-left px-4 py-3 rounded-sm text-sm font-semibold transition-all cursor-pointer ${
                   activeView === item.id 
                     ? 'bg-[#173C2C] text-[#FDFCF8]' 
                     : 'text-[#3D3A37] hover:bg-[#F4F1EA]'

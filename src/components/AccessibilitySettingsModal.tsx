@@ -40,7 +40,7 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
 }) => {
   if (!isOpen) return null;
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   return (
     <div 
@@ -62,13 +62,13 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
                 SYSTEM PREFERENCES
               </span>
               <h2 id="accessibility-modal-title" className="editorial-title text-base sm:text-lg font-bold text-[#161616]">
-                Accessibility & Display
+                {t.settings.title}
               </h2>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xs text-[#78716C] hover:bg-[#F4F1EA] hover:text-[#161616] border border-transparent hover:border-[#E7E3DA] focus-visible:ring-2 focus-visible:ring-[#173C2C]"
+            className="p-1.5 rounded-xs text-[#78716C] hover:bg-[#F4F1EA] hover:text-[#161616] border border-transparent hover:border-[#E7E3DA] focus-visible:ring-2 focus-visible:ring-[#173C2C] cursor-pointer"
             aria-label="Close settings"
           >
             <X className="w-4 h-4" aria-hidden="true" />
@@ -97,7 +97,7 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
                   key={l.id}
                   type="button"
                   onClick={() => setLanguage(l.id as AppLanguage)}
-                  className={`p-2.5 rounded-xs border text-center transition-all ${
+                  className={`p-2.5 rounded-xs border text-center transition-all cursor-pointer ${
                     language === l.id
                       ? 'border-[#173C2C] bg-[#F4F1EA] text-[#173C2C] font-semibold shadow-2xs'
                       : 'border-[#E7E3DA] bg-[#FFFFFF] text-[#57534E] hover:bg-[#FAF8F5]'
@@ -115,7 +115,7 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
             <div className="flex items-center gap-2 text-[#173C2C]">
               <Type className="w-3.5 h-3.5" />
               <h3 className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616]">
-                Text Scaling Size
+                {t.settings.textSize}
               </h3>
             </div>
 
@@ -129,7 +129,7 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
                   key={s.id}
                   type="button"
                   onClick={() => updateSettings({ textSize: s.id as any })}
-                  className={`p-2.5 rounded-xs border text-center transition-all ${
+                  className={`p-2.5 rounded-xs border text-center transition-all cursor-pointer ${
                     settings.textSize === s.id
                       ? 'border-[#173C2C] bg-[#F4F1EA] text-[#173C2C] font-semibold shadow-2xs'
                       : 'border-[#E7E3DA] bg-[#FFFFFF] text-[#57534E] hover:bg-[#FAF8F5]'
@@ -155,14 +155,14 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
               {/* High Contrast */}
               <div className="flex items-center justify-between p-2 rounded-xs hover:bg-[#FAF8F5]">
                 <div>
-                  <span className="text-xs font-semibold text-[#161616] block">High Contrast Mode</span>
+                  <span className="text-xs font-semibold text-[#161616] block">{t.settings.highContrast}</span>
                   <span className="text-[11px] text-[#78716C]">Maximizes text contrast and thickens borders for sunlight readability.</span>
                 </div>
                 <input
                   type="checkbox"
                   checked={settings.highContrast}
                   onChange={(e) => updateSettings({ highContrast: e.target.checked })}
-                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C]"
+                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C] cursor-pointer"
                   aria-label="Toggle High Contrast Mode"
                 />
               </div>
@@ -170,14 +170,14 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
               {/* Reduced Motion */}
               <div className="flex items-center justify-between p-2 rounded-xs hover:bg-[#FAF8F5]">
                 <div>
-                  <span className="text-xs font-semibold text-[#161616] block">Reduced Motion</span>
+                  <span className="text-xs font-semibold text-[#161616] block">{t.settings.reducedMotion}</span>
                   <span className="text-[11px] text-[#78716C]">Disables smooth transitions and animations.</span>
                 </div>
                 <input
                   type="checkbox"
                   checked={settings.reducedMotion}
                   onChange={(e) => updateSettings({ reducedMotion: e.target.checked })}
-                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C]"
+                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C] cursor-pointer"
                   aria-label="Toggle Reduced Motion"
                 />
               </div>
@@ -185,14 +185,14 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
               {/* Low Data Mode */}
               <div className="flex items-center justify-between p-2 rounded-xs hover:bg-[#FAF8F5]">
                 <div>
-                  <span className="text-xs font-semibold text-[#161616] block">Ultra Low-Data Saver</span>
+                  <span className="text-xs font-semibold text-[#161616] block">{t.settings.lowData}</span>
                   <span className="text-[11px] text-[#78716C]">Prioritizes plain text and offline caching for limited data recharges.</span>
                 </div>
                 <input
                   type="checkbox"
                   checked={settings.lowDataMode}
                   onChange={(e) => updateSettings({ lowDataMode: e.target.checked })}
-                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C]"
+                  className="w-4 h-4 accent-[#173C2C] rounded-xs border-[#E7E3DA] focus:ring-[#173C2C] cursor-pointer"
                   aria-label="Toggle Ultra Low-Data Saver"
                 />
               </div>
@@ -221,11 +221,11 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
                       onClose();
                       onLogout();
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[#FEF2F2] hover:bg-[#FEE2E2] text-[#B91C1C] text-xs font-mono font-semibold border border-[#FECACA] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-[#FEF2F2] hover:bg-[#FEE2E2] text-[#B91C1C] text-xs font-mono font-semibold border border-[#FECACA] transition-colors cursor-pointer"
                     id="settings-modal-signout-btn"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
+                    <span>{t.auth.logout}</span>
                   </button>
                 )}
               </div>
@@ -254,9 +254,9 @@ export const AccessibilitySettingsModal: React.FC<AccessibilitySettingsModalProp
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-xs font-semibold hover:bg-[#102B1F] transition-colors border border-[#173C2C]"
+            className="px-5 py-2 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-xs font-semibold hover:bg-[#102B1F] transition-colors border border-[#173C2C] cursor-pointer"
           >
-            Save & Close
+            {t.settings.save}
           </button>
         </div>
 

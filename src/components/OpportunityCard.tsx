@@ -4,6 +4,7 @@ import {
   UserProfile, 
   AppLanguage 
 } from '../types';
+import { translations } from '../data/translations';
 import { 
   CheckCircle, 
   Coins, 
@@ -51,12 +52,13 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
   onOpenAffordability,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const t = translations[language] || translations.en;
   const assessment = evaluateAffordability(opportunity, profile);
   const isGoodFit = assessment.status === 'GOOD_MATCH';
 
   return (
     <article 
-      className={`bg-[#FFFFFF] rounded-sm border transition-all p-5 sm:p-6 space-y-4 relative flex flex-col justify-between ${
+      className={`bg-[#FFFFFF] rounded-sm border transition-all p-4 sm:p-6 space-y-4 relative flex flex-col justify-between max-w-full ${
         isGoodFit 
           ? 'border-2 border-[#173C2C] shadow-xs' 
           : 'border border-[#E7E3DA] hover:border-[#C7C2B6]'
@@ -71,24 +73,24 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           <div className="flex flex-wrap items-center gap-1.5">
             {/* Category Tag */}
             <span className="px-2.5 py-0.5 rounded-xs bg-[#F4F1EA] text-[#44403C] text-[10px] font-mono font-bold border border-[#DDD7CC] uppercase tracking-wider">
-              {opportunity.category === 'scholarships' && '🎓 Scholarship'}
-              {opportunity.category === 'free_courses' && '📚 Free Course'}
-              {opportunity.category === 'internships' && '💼 Internship'}
-              {opportunity.category === 'jobs' && '💻 Job'}
-              {opportunity.category === 'mentorship' && '🧑‍🏫 Mentorship'}
-              {opportunity.category === 'skill_programs' && '🛠️ Skill Program'}
+              {opportunity.category === 'scholarships' && `🎓 ${t.categories.scholarships}`}
+              {opportunity.category === 'free_courses' && `📚 ${t.categories.freeCourses}`}
+              {opportunity.category === 'internships' && `💼 ${t.categories.internships}`}
+              {opportunity.category === 'jobs' && `💻 ${t.categories.jobs}`}
+              {opportunity.category === 'mentorship' && `🧑‍🏫 ${t.categories.mentorship}`}
+              {opportunity.category === 'skill_programs' && `🛠️ ${t.categories.skillPrograms}`}
             </span>
 
             {/* Level Tag */}
             <span className="px-2 py-0.5 rounded-xs bg-[#FAF8F5] text-[#57534E] text-[10px] font-mono font-medium border border-[#E7E3DA] capitalize">
-              {opportunity.level}
+              {opportunity.level === 'beginner' ? t.beginner : opportunity.level}
             </span>
 
-            {/* "GOOD FIT FOR YOU ✓" / "CHECK THIS FIRST" Badge */}
+            {/* "GOOD FIT FOR YOU ✓" */}
             {isGoodFit && (
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-[10px] font-mono font-bold">
                 <Sparkles className="w-3 h-3 text-[#FDFCF8]" aria-hidden="true" />
-                <span>GOOD FIT FOR YOU ✓</span>
+                <span>{t.goodFit.toUpperCase()} ✓</span>
               </span>
             )}
           </div>
@@ -97,7 +99,7 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           <button
             type="button"
             onClick={() => onToggleBookmark(opportunity.id)}
-            className={`p-1.5 rounded-xs border transition-colors focus-visible:ring-2 focus-visible:ring-[#173C2C] ${
+            className={`p-1.5 rounded-xs border transition-colors focus-visible:ring-2 focus-visible:ring-[#173C2C] cursor-pointer ${
               isBookmarked 
                 ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C]' 
                 : 'text-[#78716C] border-[#E7E3DA] hover:bg-[#F4F1EA] hover:text-[#161616]'
@@ -119,7 +121,7 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
               {opportunity.provider}
             </span>
             <span className="text-[10px] text-[#78716C] font-mono bg-[#FAF8F5] px-2 py-0.5 rounded-xs border border-[#E7E3DA]">
-              Source: {opportunity.source || 'Official Website'}
+              {t.source}: {opportunity.source || 'Official Website'}
             </span>
           </div>
         </div>
@@ -130,10 +132,10 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           {/* Cost */}
           <div className="flex items-center gap-1.5 p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
             <Coins className="w-3.5 h-3.5 text-[#173C2C] shrink-0" aria-hidden="true" />
-            <div>
-              <span className="text-[9px] font-mono text-[#78716C] uppercase block">Cost</span>
+            <div className="min-w-0">
+              <span className="text-[9px] font-mono text-[#78716C] uppercase block">{t.cost}</span>
               <span className="font-semibold text-[#161616] truncate font-mono text-[11px] block">
-                {opportunity.cost === 'free' ? 'Free (₹0)' : opportunity.costLabel}
+                {opportunity.cost === 'free' ? `${t.freeFirst} (₹0)` : opportunity.costLabel}
               </span>
             </div>
           </div>
@@ -141,10 +143,10 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           {/* Level */}
           <div className="flex items-center gap-1.5 p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
             <Layers className="w-3.5 h-3.5 text-[#173C2C] shrink-0" aria-hidden="true" />
-            <div>
-              <span className="text-[9px] font-mono text-[#78716C] uppercase block">Level</span>
+            <div className="min-w-0">
+              <span className="text-[9px] font-mono text-[#78716C] uppercase block">{t.level}</span>
               <span className="font-medium text-[#161616] truncate font-mono text-[11px] capitalize block">
-                {opportunity.level}
+                {opportunity.level === 'beginner' ? t.beginner : opportunity.level}
               </span>
             </div>
           </div>
@@ -152,8 +154,8 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           {/* Time Required */}
           <div className="flex items-center gap-1.5 p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
             <Clock className="w-3.5 h-3.5 text-[#173C2C] shrink-0" aria-hidden="true" />
-            <div>
-              <span className="text-[9px] font-mono text-[#78716C] uppercase block">Time</span>
+            <div className="min-w-0">
+              <span className="text-[9px] font-mono text-[#78716C] uppercase block">{t.timeCommitment}</span>
               <span className="font-medium text-[#57534E] truncate font-mono text-[11px] block">
                 {opportunity.timeCommitment}
               </span>
@@ -163,10 +165,10 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           {/* Data Requirement */}
           <div className="flex items-center gap-1.5 p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
             <Wifi className="w-3.5 h-3.5 text-[#173C2C] shrink-0" aria-hidden="true" />
-            <div>
-              <span className="text-[9px] font-mono text-[#78716C] uppercase block">Data</span>
+            <div className="min-w-0">
+              <span className="text-[9px] font-mono text-[#78716C] uppercase block">{t.dataRequirement}</span>
               <span className="font-medium text-[#57534E] truncate font-mono text-[11px] block">
-                {opportunity.dataRequirement === 'low_data' ? 'Low Data (Offline)' : 'Standard Data'}
+                {opportunity.dataRequirement === 'low_data' ? t.lowData : 'Standard Data'}
               </span>
             </div>
           </div>
@@ -221,7 +223,7 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           <div className="pt-3 border-t border-[#E7E3DA] space-y-3 animate-in fade-in duration-150">
             <div>
               <h4 className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C] mb-1">
-                Eligibility & Requirements:
+                {t.eligibility} & {t.prerequisites}:
               </h4>
               <ul className="space-y-1 text-xs text-[#44403C] font-serif">
                 {opportunity.eligibility.map((el, i) => (
@@ -235,7 +237,7 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
 
             <div>
               <h4 className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C] mb-1">
-                Skills / Knowledge Covered:
+                {t.skillsCovered}:
               </h4>
               <div className="flex flex-wrap gap-1.5">
                 {opportunity.skillsTaught.map((skill, i) => (
@@ -247,7 +249,7 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
             </div>
 
             <div className="p-3 bg-[#FAF8F5] rounded-xs border border-[#E7E3DA] text-xs text-[#57534E]">
-              <span className="font-semibold text-[#161616] block mb-0.5 font-mono text-[11px] uppercase">Official Instructions:</span>
+              <span className="font-semibold text-[#161616] block mb-0.5 font-mono text-[11px] uppercase">{t.howToApply}:</span>
               <span className="font-serif">{opportunity.howToApply}</span>
             </div>
           </div>
@@ -256,25 +258,25 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
       </div>
 
       {/* Card Action Controls */}
-      <div className="pt-4 border-t border-[#E7E3DA] flex flex-wrap items-center justify-between gap-2.5 mt-2">
+      <div className="pt-4 border-t border-[#E7E3DA] flex flex-wrap items-center justify-between gap-2 mt-2">
         
         {/* Fit Check (Can I afford this?) */}
         <button
           type="button"
           onClick={() => onOpenAffordability(opportunity)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold text-[#173C2C] bg-[#F4F1EA] hover:bg-[#EAE5D9] border border-[#DDD7CC] transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold text-[#173C2C] bg-[#F4F1EA] hover:bg-[#EAE5D9] border border-[#DDD7CC] transition-colors cursor-pointer"
           id={`afford-btn-${opportunity.id}`}
         >
           <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Can I afford this?</span>
+          <span>{t.canIAffordThis}</span>
         </button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Details toggle */}
           <button
             type="button"
             onClick={() => setExpanded(!expanded)}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold text-[#57534E] hover:bg-[#F4F1EA] border border-transparent hover:border-[#E7E3DA] transition-colors"
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xs text-xs font-mono font-semibold text-[#57534E] hover:bg-[#F4F1EA] border border-transparent hover:border-[#E7E3DA] transition-colors cursor-pointer"
           >
             <span>{expanded ? 'Less' : 'Details'}</span>
             {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -284,14 +286,14 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
           <button
             type="button"
             onClick={() => onToggleApply(opportunity.id)}
-            className={`px-3 py-1.5 rounded-xs text-xs font-semibold font-mono transition-all border ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-xs text-xs font-semibold font-mono transition-all border cursor-pointer ${
               isApplied
                 ? 'bg-[#F4F1EA] text-[#173C2C] border-[#DDD7CC]'
                 : 'bg-[#FFFFFF] hover:bg-[#FAF8F5] text-[#57534E] border-[#E7E3DA]'
             }`}
             title={isApplied ? 'Applied' : 'Mark as applied in My Journey'}
           >
-            {isApplied ? '✓ Applied' : 'Mark Applied'}
+            {isApplied ? `✓ ${t.applied}` : t.apply}
           </button>
 
           {/* PRIMARY DIRECT LINK BUTTON: "View Opportunity →" */}
@@ -299,11 +301,11 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
             href={opportunity.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xs text-xs font-bold bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] border border-[#0D241A] shadow-2xs transition-all active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-[#173C2C]"
+            className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xs text-xs font-bold bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] border border-[#0D241A] shadow-2xs transition-all active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-[#173C2C]"
             id={`view-opp-${opportunity.id}`}
             aria-label={`View official opportunity website for ${opportunity.title} (opens in a new tab)`}
           >
-            <span>View Opportunity</span>
+            <span>{t.viewOpportunity}</span>
             <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
           </a>
         </div>

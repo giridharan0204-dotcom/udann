@@ -5,6 +5,7 @@ import {
   AppLanguage, 
   Opportunity 
 } from '../types';
+import { translations } from '../data/translations';
 import { VERIFIED_OPPORTUNITIES } from '../data/opportunities';
 import { 
   CheckCircle, 
@@ -40,6 +41,7 @@ interface MyJourneyViewProps {
 export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
   roadmap,
   profile,
+  language,
   completedTaskIds,
   bookmarkedOpportunityIds,
   appliedOpportunityIds,
@@ -48,6 +50,8 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
   goToRoadmap,
   openOnboarding,
 }) => {
+  const t = translations[language] || translations.en;
+
   // Saved opportunities
   const savedOpportunities = VERIFIED_OPPORTUNITIES.filter((opp) =>
     bookmarkedOpportunityIds.includes(opp.id)
@@ -64,13 +68,13 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10 animate-in fade-in duration-200" id="main-content">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 space-y-6 sm:space-y-10 animate-in fade-in duration-200" id="main-content">
       
       {/* Header with high contrast editorial styling */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E7E3DA] pb-6">
         <div>
           <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#173C2C] block">
-            MY JOURNEY PATHWAY
+            {t.nav.myJourney.toUpperCase()}
           </span>
           <h1 className="editorial-title text-2xl sm:text-3xl lg:text-4xl font-bold text-[#161616]">
             Where You Stand Today
@@ -85,7 +89,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
           onClick={goToRoadmap}
           className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-xs sm:text-sm font-bold border border-[#0D241A] shadow-md hover:shadow-lg transition-all cursor-pointer self-start sm:self-auto"
         >
-          <span>Continue to Next Step</span>
+          <span>{t.startStep}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -93,7 +97,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
       {/* ================================================== */}
       {/* UNIQUE SIGNATURE "UDAAN JOURNEY" VISUAL            */}
       {/* ================================================== */}
-      <div className="relative card-3d bg-[#FFFFFF] border-2 border-[#173C2C] rounded-lg p-6 sm:p-8 space-y-8 shadow-md overflow-hidden">
+      <div className="relative card-3d bg-[#FFFFFF] border-2 border-[#173C2C] rounded-lg p-5 sm:p-8 space-y-6 sm:space-y-8 shadow-md overflow-hidden">
         
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E7E3DA] pb-4">
           <div className="flex items-center gap-2">
@@ -159,7 +163,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
             return (
               <div 
                 key={st.id}
-                className={`p-4 rounded-md border flex items-center justify-between transition-all ${
+                className={`p-3.5 sm:p-4 rounded-md border flex items-center justify-between transition-all ${
                   isCurrent 
                     ? 'bg-[#FAF8F5] border-2 border-[#EA580C] shadow-xs' 
                     : isCompleted 
@@ -188,12 +192,12 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
                 </div>
 
                 {isCurrent && (
-                  <span className="text-[10px] font-mono font-bold uppercase bg-[#EA580C] text-[#FDFCF8] px-2.5 py-0.5 rounded-xs">
+                  <span className="text-[10px] font-mono font-bold uppercase bg-[#EA580C] text-[#FDFCF8] px-2.5 py-0.5 rounded-xs shrink-0 ml-2">
                     ACTIVE NOW
                   </span>
                 )}
                 {isCompleted && (
-                  <span className="text-[10px] font-mono text-[#173C2C] font-bold">
+                  <span className="text-[10px] font-mono text-[#173C2C] font-bold shrink-0 ml-2">
                     Completed ✓
                   </span>
                 )}
@@ -209,7 +213,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
             onClick={goToRoadmap}
             className="w-full inline-flex items-center justify-center gap-2.5 py-4 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-sm sm:text-base font-bold border border-[#0D241A] shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
-            <span>Continue to My Next Step</span>
+            <span>{t.startStep}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -217,11 +221,11 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
       </div>
 
       {/* Saved & Applied Opportunities Box */}
-      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-6 sm:p-8 space-y-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-[#E7E3DA] pb-4">
+      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-5 sm:p-8 space-y-4 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E7E3DA] pb-4">
           <div>
             <h2 className="editorial-title text-lg sm:text-xl font-bold text-[#161616]">
-              Saved & Applied Opportunities ({savedOpportunities.length})
+              {t.savedOpportunities} ({savedOpportunities.length})
             </h2>
             <p className="text-xs font-serif text-[#57534E]">
               Quick links to verified programs you've bookmarked for your journey.
@@ -230,9 +234,9 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
           <button
             type="button"
             onClick={goToExplore}
-            className="text-xs font-mono font-semibold text-[#173C2C] hover:underline cursor-pointer"
+            className="text-xs font-mono font-semibold text-[#173C2C] hover:underline cursor-pointer self-start sm:self-auto"
           >
-            Explore More Opportunities →
+            {t.exploreOpportunities} →
           </button>
         </div>
 
@@ -244,7 +248,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
                 className="p-4 rounded-md border border-[#E7E3DA] bg-[#FAF8F5] flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#C7C2B6] transition-all"
               >
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-[#F4F1EA] text-[#173C2C] border border-[#DDD7CC] rounded-xs uppercase">
                       {opp.category.replace('_', ' ')}
                     </span>
@@ -262,7 +266,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onToggleBookmark(opp.id)}
-                    className="text-xs font-mono text-[#78716C] hover:text-[#161616] px-2.5 py-1.5 rounded-sm border border-[#E7E3DA] bg-[#FFFFFF] hover:bg-[#F4F1EA]"
+                    className="text-xs font-mono text-[#78716C] hover:text-[#161616] px-2.5 py-1.5 rounded-sm border border-[#E7E3DA] bg-[#FFFFFF] hover:bg-[#F4F1EA] cursor-pointer"
                     title="Remove from saved"
                   >
                     Remove
@@ -273,7 +277,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-sm text-xs font-mono font-bold bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] border border-[#0D241A] shadow-xs cursor-pointer"
                   >
-                    <span>View Opportunity</span>
+                    <span>{t.opportunity.viewOfficial}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -281,7 +285,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
             ))}
           </div>
         ) : (
-          <div className="p-8 text-center bg-[#FAF8F5] rounded-md border border-dashed border-[#DDD7CC] space-y-3">
+          <div className="p-6 sm:p-8 text-center bg-[#FAF8F5] rounded-md border border-dashed border-[#DDD7CC] space-y-3">
             <p className="text-sm text-[#57534E] font-serif">
               You haven't bookmarked any opportunities yet.
             </p>

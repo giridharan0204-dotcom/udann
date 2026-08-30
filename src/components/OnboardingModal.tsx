@@ -26,6 +26,7 @@ import {
   EducationLevel,
   CareerInterest
 } from '../types';
+import { translations } from '../data/translations';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -40,9 +41,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   onClose,
   onComplete,
   existingProfile,
+  language,
 }) => {
   const [step, setStep] = useState<number>(1);
   const totalSteps = 4;
+  const t = translations[language] || translations.en;
 
   // 1. WHAT DO YOU WANT? (Job / Skill / Internship / Scholarship / Education)
   const [goal, setGoal] = useState<PrimaryGoal>(existingProfile?.goal || 'first_job');
@@ -95,18 +98,18 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#161616]/75 backdrop-blur-xs overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#161616]/75 backdrop-blur-xs overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="onboarding-title"
     >
-      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-sm w-full max-w-lg shadow-xl overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-sm w-full max-w-lg shadow-xl overflow-hidden my-4 sm:my-6 animate-in fade-in zoom-in-95 duration-150">
         
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#E7E3DA] bg-[#FAF8F5] flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 border-b border-[#E7E3DA] bg-[#FAF8F5] flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#173C2C] block">
-              FIND MY NEXT STEP
+              {t.findNextStep.toUpperCase()}
             </span>
             <span className="text-xs font-mono font-semibold text-[#57534E]">
               Step {step} of {totalSteps}
@@ -114,7 +117,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xs text-[#78716C] hover:bg-[#F4F1EA] hover:text-[#161616] transition-colors"
+            className="p-1.5 rounded-xs text-[#78716C] hover:bg-[#F4F1EA] hover:text-[#161616] transition-colors cursor-pointer"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -130,7 +133,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         </div>
 
         {/* Form Body */}
-        <div className="p-6 space-y-6">
+        <div className="p-5 sm:p-6 space-y-5 sm:space-y-6 max-h-[70vh] overflow-y-auto">
           
           {/* STEP 1: WHAT DO YOU WANT? */}
           {step === 1 && (
@@ -156,7 +159,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     key={item.id}
                     type="button"
                     onClick={() => setGoal(item.id as PrimaryGoal)}
-                    className={`w-full p-3 text-left rounded-xs border transition-all flex items-center justify-between ${
+                    className={`w-full p-3 text-left rounded-xs border transition-all flex items-center justify-between cursor-pointer ${
                       goal === item.id 
                         ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' 
                         : 'border-[#E7E3DA] hover:bg-[#FAF8F5]'
@@ -195,7 +198,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     key={lvl.id}
                     type="button"
                     onClick={() => setSkillLevel(lvl.id as SkillLevel)}
-                    className={`w-full p-3.5 text-left rounded-xs border transition-all flex items-center justify-between ${
+                    className={`w-full p-3.5 text-left rounded-xs border transition-all flex items-center justify-between cursor-pointer ${
                       skillLevel === lvl.id 
                         ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' 
                         : 'border-[#E7E3DA] hover:bg-[#FAF8F5]'
@@ -234,7 +237,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     key={dev.id}
                     type="button"
                     onClick={() => setDeviceAccess(dev.id as DeviceAccess)}
-                    className={`w-full p-3.5 text-left rounded-xs border transition-all flex items-center justify-between ${
+                    className={`w-full p-3.5 text-left rounded-xs border transition-all flex items-center justify-between cursor-pointer ${
                       deviceAccess === dev.id 
                         ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' 
                         : 'border-[#E7E3DA] hover:bg-[#FAF8F5]'
@@ -269,11 +272,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <Coins className="w-3.5 h-3.5 text-[#173C2C]" />
                   <span>MONEY / BUDGET:</span>
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setMonthlyBudget('zero')}
-                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left ${
+                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left cursor-pointer ${
                       monthlyBudget === 'zero' ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' : 'border-[#E7E3DA]'
                     }`}
                   >
@@ -283,7 +286,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setMonthlyBudget('under_500')}
-                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left ${
+                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left cursor-pointer ${
                       monthlyBudget === 'under_500' ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' : 'border-[#E7E3DA]'
                     }`}
                   >
@@ -299,11 +302,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <Wifi className="w-3.5 h-3.5 text-[#173C2C]" />
                   <span>INTERNET ACCESS:</span>
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setInternetAccess('daily_mobile_1_5gb')}
-                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left ${
+                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left cursor-pointer ${
                       internetAccess === 'daily_mobile_1_5gb' ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' : 'border-[#E7E3DA]'
                     }`}
                   >
@@ -313,7 +316,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setInternetAccess('unlimited_wifi')}
-                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left ${
+                    className={`p-2.5 text-xs font-semibold rounded-xs border text-left cursor-pointer ${
                       internetAccess === 'unlimited_wifi' ? 'border-2 border-[#173C2C] bg-[#FAF8F5]' : 'border-[#E7E3DA]'
                     }`}
                   >
@@ -331,15 +334,15 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { id: '1_hour', label: '1 hour/day' },
-                    { id: '2_hours', label: '2 hours/day' },
-                    { id: '3_to_4_hours', label: '3-4 hours/day' },
+                    { id: '1_hour', label: '1 hr/day' },
+                    { id: '2_hours', label: '2 hrs/day' },
+                    { id: '3_to_4_hours', label: '3-4 hrs/day' },
                   ].map((hrs) => (
                     <button
                       key={hrs.id}
                       type="button"
                       onClick={() => setDailyHours(hrs.id as DailyHours)}
-                      className={`p-2 text-xs font-mono text-center rounded-xs border ${
+                      className={`p-2 text-xs font-mono text-center rounded-xs border cursor-pointer ${
                         dailyHours === hrs.id ? 'border-2 border-[#173C2C] bg-[#FAF8F5] font-bold text-[#173C2C]' : 'border-[#E7E3DA] text-[#57534E]'
                       }`}
                     >
@@ -355,12 +358,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         </div>
 
         {/* Footer Navigation */}
-        <div className="px-6 py-4 bg-[#FAF8F5] border-t border-[#E7E3DA] flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 bg-[#FAF8F5] border-t border-[#E7E3DA] flex items-center justify-between">
           {step > 1 ? (
             <button
               type="button"
               onClick={handleBack}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xs border border-[#DDD7CC] bg-[#FFFFFF] text-xs font-semibold text-[#57534E] hover:bg-[#F4F1EA]"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xs border border-[#DDD7CC] bg-[#FFFFFF] text-xs font-semibold text-[#57534E] hover:bg-[#F4F1EA] cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
@@ -372,9 +375,9 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           <button
             type="button"
             onClick={handleNext}
-            className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-xs bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-xs font-bold shadow-xs border border-[#0D241A]"
+            className="inline-flex items-center gap-1.5 px-5 sm:px-6 py-2.5 rounded-xs bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-xs font-bold shadow-xs border border-[#0D241A] cursor-pointer"
           >
-            <span>{step === totalSteps ? 'Show My Next Step' : 'Next Step'}</span>
+            <span>{step === totalSteps ? t.findNextStep : 'Next Step'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

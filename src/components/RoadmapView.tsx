@@ -5,6 +5,7 @@ import {
   AppLanguage, 
   RoadmapTask 
 } from '../types';
+import { translations } from '../data/translations';
 import { 
   CheckCircle2, 
   Clock, 
@@ -40,6 +41,7 @@ interface RoadmapViewProps {
 export const RoadmapView: React.FC<RoadmapViewProps> = ({
   roadmap,
   profile,
+  language,
   completedTaskIds,
   toggleTaskCompletion,
   openOnboarding,
@@ -48,6 +50,8 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
 }) => {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [realityCheckTooltip, setRealityCheckTooltip] = useState<string | null>(null);
+
+  const t = translations[language] || translations.en;
 
   // Find the exact immediate NEXT task to spotlight
   let currentNextTask: { task: RoadmapTask; weekNum: number; stageName: string } | null = null;
@@ -118,7 +122,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8 animate-in fade-in duration-200" id="main-content">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 space-y-6 sm:space-y-8 animate-in fade-in duration-200" id="main-content">
       
       {/* Visual Journey Path Indicator */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E7E3DA] pb-4">
@@ -144,14 +148,14 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
           className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#173C2C] hover:underline cursor-pointer self-start sm:self-auto"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>Update My Answers</span>
+          <span>{t.updateAnswers}</span>
         </button>
       </div>
 
       {/* ================================================== */}
       {/* FEATURE #1: "MY NEXT STEP" (PREMIUM 3D FOCUS)      */}
       {/* ================================================== */}
-      <div className="relative card-3d bg-[#FFFFFF] border-2 border-[#173C2C] rounded-lg p-6 sm:p-8 space-y-6 shadow-md overflow-hidden">
+      <div className="relative card-3d bg-[#FFFFFF] border-2 border-[#173C2C] rounded-lg p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-md overflow-hidden">
         
         {/* Soft Decorative Ambient Corner Gradient */}
         <div 
@@ -163,7 +167,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E7E3DA] pb-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[#173C2C] text-[#FDFCF8] text-[11px] font-mono font-bold uppercase tracking-wider shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
-            <span>YOUR NEXT STEP</span>
+            <span>{t.nav.myNextStep.toUpperCase()}</span>
           </div>
           <span className="text-xs font-mono text-[#57534E] bg-[#FAF8F5] px-3 py-1 rounded-sm border border-[#E7E3DA]">
             Stage: <strong className="text-[#161616]">{activeStageName}</strong> &bull; Week {currentNextTask?.weekNum || 1}
@@ -181,20 +185,20 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
         </div>
 
         {/* WHY THIS FITS YOU */}
-        <div className="p-5 rounded-md bg-[#FAF8F5] border border-[#E7E3DA] space-y-3">
+        <div className="p-4 sm:p-5 rounded-md bg-[#FAF8F5] border border-[#E7E3DA] space-y-3">
           <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#173C2C] flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#173C2C]" />
-            <span>WHY THIS FITS YOU:</span>
+            <span>{t.whyThisFitsYou}:</span>
           </span>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-serif text-[#3D3A37]">
             <div className="flex items-center gap-2 bg-[#FFFFFF] p-2 rounded-xs border border-[#E7E3DA]">
               <Check className="w-4 h-4 text-[#173C2C] shrink-0 font-bold" />
-              <span><strong>Free</strong> (100% Zero Cost)</span>
+              <span><strong>{t.freeFirst}</strong> (100% Zero Cost)</span>
             </div>
             <div className="flex items-center gap-2 bg-[#FFFFFF] p-2 rounded-xs border border-[#E7E3DA]">
               <Check className="w-4 h-4 text-[#173C2C] shrink-0 font-bold" />
-              <span><strong>Beginner friendly</strong> (Step-by-step guidance)</span>
+              <span><strong>{t.beginner}</strong> (Step-by-step guidance)</span>
             </div>
             <div className="flex items-center gap-2 bg-[#FFFFFF] p-2 rounded-xs border border-[#E7E3DA]">
               <Check className="w-4 h-4 text-[#173C2C] shrink-0 font-bold" />
@@ -208,40 +212,40 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
         </div>
 
         {/* 4 Essential Quick Parameters: COST, TIME, DATA, LEVEL */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center border-y border-[#E7E3DA] py-4 text-xs font-mono">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-center border-y border-[#E7E3DA] py-3 sm:py-4 text-xs font-mono">
           <div className="p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
-            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">COST</span>
-            <span className="font-bold text-[#173C2C] text-sm">FREE (₹0)</span>
+            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">{t.cost}</span>
+            <span className="font-bold text-[#173C2C] text-xs sm:text-sm">{t.freeFirst} (₹0)</span>
           </div>
           <div className="p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
-            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">TIME</span>
-            <span className="font-bold text-[#161616] text-sm">{activeTask?.estimatedMinutes || 45} mins</span>
+            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">{t.timeCommitment}</span>
+            <span className="font-bold text-[#161616] text-xs sm:text-sm">{activeTask?.estimatedMinutes || 45} mins</span>
           </div>
           <div className="p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
-            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">DATA</span>
-            <span className="font-bold text-[#173C2C] text-sm">LOW DATA</span>
+            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">{t.dataRequirement}</span>
+            <span className="font-bold text-[#173C2C] text-xs sm:text-sm">{t.lowData}</span>
           </div>
           <div className="p-2 rounded-xs bg-[#FAF8F5] border border-[#E7E3DA]">
-            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">LEVEL</span>
-            <span className="font-bold text-[#161616] text-sm capitalize">Beginner</span>
+            <span className="text-[10px] text-[#78716C] uppercase block font-semibold">{t.level}</span>
+            <span className="font-bold text-[#161616] text-xs sm:text-sm capitalize">{t.beginner}</span>
           </div>
         </div>
 
         {/* ================================================== */}
         {/* FEATURE #2: REALITY CHECK (VISUAL INTERACTION)     */}
         {/* ================================================== */}
-        <div className="p-5 rounded-md bg-[#F4F1EA] border border-[#DDD7CC] space-y-3.5">
-          <div className="flex items-center justify-between">
+        <div className="p-4 sm:p-5 rounded-md bg-[#F4F1EA] border border-[#DDD7CC] space-y-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#161616] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#173C2C]" />
-              <span>REALITY CHECK</span>
+              <span>{t.realityCheck}</span>
             </span>
             <span className="text-xs font-mono text-[#173C2C] font-bold px-2 py-0.5 bg-[#FFFFFF] rounded-xs border border-[#DDD7CC] shadow-2xs">
-              {allFit ? 'THIS FITS YOUR SITUATION ✓' : 'VERIFIED MATCH'}
+              {allFit ? `${t.goodFit.toUpperCase()} ✓` : 'VERIFIED MATCH'}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-mono">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 text-xs font-mono">
             <button 
               type="button"
               onClick={() => setRealityCheckTooltip('Cost is ₹0. No hidden registration fees.')}
@@ -295,7 +299,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
             {!allFit && (
               <button
                 onClick={goToExplore}
-                className="text-xs font-mono font-bold text-[#EA580C] hover:underline"
+                className="text-xs font-mono font-bold text-[#EA580C] hover:underline cursor-pointer"
               >
                 LET'S FIND A BETTER OPTION →
               </button>
@@ -306,7 +310,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
         {/* Direct Primary Action Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
             {/* Mark Completed Checkbox Button */}
             <button
               type="button"
@@ -318,8 +322,8 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
               }`}
             >
               {activeTask && completedTaskIds.includes(activeTask.id) 
-                ? '✓ Step Completed' 
-                : 'Mark Step Done'}
+                ? `✓ ${t.applied}` 
+                : t.startStep}
             </button>
 
             {/* Primary CTA: Start This Step -> */}
@@ -327,9 +331,9 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
               href={matchedOpp.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-xs sm:text-sm font-bold border border-[#0D241A] shadow-md hover:shadow-lg transition-all w-full sm:w-auto cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-xs sm:text-sm font-bold border border-[#0D241A] shadow-md hover:shadow-lg transition-all w-full sm:w-auto cursor-pointer"
             >
-              <span>Start This Step</span>
+              <span>{t.startStep}</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -340,7 +344,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
             onClick={goToExplore}
             className="px-5 py-3.5 rounded-sm bg-[#FFFFFF] hover:bg-[#F4F1EA] text-[#44403C] hover:text-[#161616] text-xs font-semibold font-mono border border-[#DDD7CC] transition-colors w-full sm:w-auto text-center cursor-pointer shadow-2xs"
           >
-            Try Another Opportunity
+            {t.exploreOpportunities}
           </button>
 
         </div>
@@ -348,7 +352,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
       </div>
 
       {/* 4-Week Milestone Sequence with 3D elevation */}
-      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-6 sm:p-8 space-y-4 shadow-sm">
+      <div className="bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-5 sm:p-8 space-y-4 shadow-sm">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E7E3DA] pb-4">
           <div>
@@ -366,7 +370,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-xs font-mono font-semibold bg-[#F4F1EA] text-[#173C2C] border border-[#DDD7CC] hover:bg-[#EAE5D9] transition-all shadow-2xs self-start sm:self-auto cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>{downloadSuccess ? 'Saved to Device!' : 'Save Text Offline'}</span>
+            <span>{downloadSuccess ? 'Saved to Device!' : t.saveOffline}</span>
           </button>
         </div>
 
@@ -382,8 +386,8 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
                     : 'bg-[#FFFFFF] border-[#E7E3DA] hover:border-[#C7C2B6]'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2.5">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-xs bg-[#F4F1EA] text-[#173C2C] border border-[#DDD7CC] uppercase">
                       Stage: {week.stageName}
                     </span>
@@ -418,7 +422,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
                           />
                           <span className="font-serif">{task.title}</span>
                         </div>
-                        <span className="text-[11px] font-mono text-[#78716C]">{task.estimatedMinutes} mins</span>
+                        <span className="text-[11px] font-mono text-[#78716C] shrink-0 ml-2">{task.estimatedMinutes} mins</span>
                       </div>
                     );
                   })}

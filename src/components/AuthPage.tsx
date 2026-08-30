@@ -55,7 +55,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   const [validationError, setValidationError] = useState<string | null>(null);
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   // Clear local validation on switch
   useEffect(() => {
@@ -167,7 +167,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FDFCF8] text-[#161616] selection:bg-[#E7E3DA] selection:text-[#173C2C]">
+    <div className="min-h-screen flex flex-col bg-[#FDFCF8] text-[#161616] selection:bg-[#E7E3DA] selection:text-[#173C2C] overflow-x-hidden">
       
       {/* Top Header Bar with New Logo */}
       <header className="border-b border-[#E7E3DA] bg-[#FAF8F5] py-3.5 px-4 sm:px-8">
@@ -200,7 +200,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                 >
                   <button
                     onClick={() => { setLanguage('en'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] ${
+                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] cursor-pointer ${
                       language === 'en' ? 'text-[#173C2C] bg-[#FAF8F5] font-bold' : 'text-[#3D3A37]'
                     }`}
                     role="menuitem"
@@ -210,7 +210,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                   </button>
                   <button
                     onClick={() => { setLanguage('hi'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] ${
+                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] cursor-pointer ${
                       language === 'hi' ? 'text-[#173C2C] bg-[#FAF8F5] font-bold' : 'text-[#3D3A37]'
                     }`}
                     role="menuitem"
@@ -220,7 +220,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                   </button>
                   <button
                     onClick={() => { setLanguage('ta'); setLangMenuOpen(false); }}
-                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] ${
+                    className={`w-full text-left px-3 py-1.5 text-xs font-semibold flex items-center justify-between hover:bg-[#FAF8F5] cursor-pointer ${
                       language === 'ta' ? 'text-[#173C2C] bg-[#FAF8F5] font-bold' : 'text-[#3D3A37]'
                     }`}
                     role="menuitem"
@@ -248,7 +248,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
       </header>
 
       {/* Main Authentication Section with 3D Depth Backdrop */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-10 sm:py-16 flex items-center justify-center relative overflow-hidden">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-16 flex items-center justify-center relative overflow-hidden">
         
         {/* Soft Radial Ambient Glow */}
         <div 
@@ -265,19 +265,19 @@ export const AuthPage: React.FC<AuthPageProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#EA580C] block">
-                THE BEGINNING OF YOUR JOURNEY
+                {t.tagline}
               </span>
               <h1 className="editorial-title text-2xl sm:text-3xl font-bold text-[#161616] tracking-tight mt-1">
-                Your next opportunity starts here.
+                {mode === 'login' ? t.auth.signIn : t.auth.signUp}
               </h1>
               <p className="text-xs sm:text-sm text-[#57534E] font-serif mt-1 max-w-sm mx-auto">
-                Sign in to resume your step-by-step career pathway and saved free opportunities.
+                {t.hero.subtitle}
               </p>
             </div>
           </div>
 
           {/* Auth Card Container with 3D elevation */}
-          <div className="card-3d bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-6 sm:p-8 shadow-md">
+          <div className="card-3d bg-[#FFFFFF] border border-[#E7E3DA] rounded-lg p-5 sm:p-8 shadow-md">
             
             {/* Form Mode Header / Tabs */}
             <div className="flex items-center border-b border-[#E7E3DA] pb-4 mb-6">
@@ -285,49 +285,35 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                 <button
                   type="button"
                   onClick={() => handleToggleMode('login')}
-                  className={`pb-2 text-sm font-bold uppercase font-mono tracking-wider transition-all border-b-2 cursor-pointer ${
+                  className={`pb-2 text-xs sm:text-sm font-bold uppercase font-mono tracking-wider transition-all border-b-2 cursor-pointer ${
                     mode === 'login'
                       ? 'border-[#173C2C] text-[#173C2C]'
                       : 'border-transparent text-[#78716C] hover:text-[#161616]'
                   }`}
                   id="tab-sign-in"
                 >
-                  Sign In
+                  {t.auth.signIn}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleToggleMode('signup')}
-                  className={`pb-2 text-sm font-bold uppercase font-mono tracking-wider transition-all border-b-2 cursor-pointer ${
+                  className={`pb-2 text-xs sm:text-sm font-bold uppercase font-mono tracking-wider transition-all border-b-2 cursor-pointer ${
                     mode === 'signup'
                       ? 'border-[#173C2C] text-[#173C2C]'
                       : 'border-transparent text-[#78716C] hover:text-[#161616]'
                   }`}
                   id="tab-create-account"
                 >
-                  Create Account
+                  {t.auth.signUp}
                 </button>
               </div>
 
               {mode === 'forgot_password' && (
-                <span className="text-xs font-mono font-semibold text-[#EA580C]">
+                <span className="text-[10px] sm:text-xs font-mono font-semibold text-[#EA580C]">
                   RESET PASSWORD
                 </span>
               )}
-            </div>
-
-            {/* Title inside card */}
-            <div className="mb-5">
-              <h2 className="editorial-title text-lg sm:text-xl font-bold text-[#161616]">
-                {mode === 'login' && 'Welcome back to UDAAN'}
-                {mode === 'signup' && 'Create your free account'}
-                {mode === 'forgot_password' && 'Reset your password'}
-              </h2>
-              <p className="text-xs text-[#57534E] font-serif mt-0.5">
-                {mode === 'login' && 'Sign in to access your saved roadmaps, bookmarks, and progress.'}
-                {mode === 'signup' && 'Sign up in seconds to start building your personalized career plan.'}
-                {mode === 'forgot_password' && 'Enter your email address to receive password recovery instructions.'}
-              </p>
             </div>
 
             {/* Dynamic Error & Validation Notice */}
@@ -359,7 +345,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               <form onSubmit={handleLoginSubmit} className="space-y-4" noValidate>
                 <div>
                   <label htmlFor="login-email" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1.5">
-                    Email Address <span className="text-[#EA580C]">*</span>
+                    {t.auth.email} <span className="text-[#EA580C]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -381,7 +367,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <label htmlFor="login-password" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616]">
-                      Password <span className="text-[#EA580C]">*</span>
+                      {t.auth.password} <span className="text-[#EA580C]">*</span>
                     </label>
                     <button
                       type="button"
@@ -389,7 +375,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                       className="text-[11px] font-mono text-[#173C2C] hover:underline focus-visible:ring-1 focus-visible:ring-[#173C2C] rounded-xs cursor-pointer"
                       id="forgot-password-link"
                     >
-                      Forgot Password?
+                      {t.auth.forgotPassword}
                     </button>
                   </div>
                   <div className="relative">
@@ -430,11 +416,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                   {isLoading ? (
                     <span className="inline-flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-[#FDFCF8] border-t-transparent rounded-full animate-spin" />
-                      <span>Signing In...</span>
+                      <span>{t.auth.signIn}...</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-2">
-                      <span>Sign In & Continue Journey</span>
+                      <span>{t.auth.signIn}</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </span>
                   )}
@@ -447,7 +433,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               <form onSubmit={handleSignUpSubmit} className="space-y-3.5" noValidate>
                 <div>
                   <label htmlFor="signup-name" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1">
-                    Full Name <span className="text-[#EA580C]">*</span>
+                    {t.auth.fullName} <span className="text-[#EA580C]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -460,7 +446,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Ramesh Patel"
+                      placeholder="e.g. Priya Sharma"
                       className="w-full pl-9 pr-3.5 py-2.5 rounded-sm border border-[#DDD7CC] bg-[#FAF8F5] text-xs sm:text-sm text-[#161616] placeholder:text-[#A8A29E] focus-visible:bg-[#FFFFFF] focus-visible:border-[#173C2C] focus-visible:ring-2 focus-visible:ring-[#173C2C] outline-none transition-all"
                     />
                   </div>
@@ -468,7 +454,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
 
                 <div>
                   <label htmlFor="signup-email" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1">
-                    Email Address <span className="text-[#EA580C]">*</span>
+                    {t.auth.email} <span className="text-[#EA580C]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -489,7 +475,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
 
                 <div>
                   <label htmlFor="signup-password" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1">
-                    Password (min. 6 chars) <span className="text-[#EA580C]">*</span>
+                    {t.auth.password} <span className="text-[#EA580C]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -522,7 +508,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
 
                 <div>
                   <label htmlFor="signup-confirm-password" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1">
-                    Confirm Password <span className="text-[#EA580C]">*</span>
+                    {t.auth.confirmPassword} <span className="text-[#EA580C]">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -562,12 +548,12 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                   {isLoading ? (
                     <span className="inline-flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-[#FDFCF8] border-t-transparent rounded-full animate-spin" />
-                      <span>Creating Account...</span>
+                      <span>{t.auth.signUp}...</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-2">
                       <Sparkles className="w-4 h-4" aria-hidden="true" />
-                      <span>Create Account & Start Navigator</span>
+                      <span>{t.auth.signUp}</span>
                     </span>
                   )}
                 </button>
@@ -579,7 +565,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
               <form onSubmit={handleForgotPasswordSubmit} className="space-y-4" noValidate>
                 <div>
                   <label htmlFor="reset-email" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#161616] mb-1.5">
-                    Enter your registered email
+                    {t.auth.email}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#78716C]">
@@ -655,11 +641,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                     />
                   </svg>
-                  <span>Continue with Google</span>
+                  <span>{t.auth.continueGoogle}</span>
                 </button>
 
                 {/* Instant Demo Access */}
-                <div className="pt-2 border-t border-[#F4F1EA] flex items-center justify-between">
+                <div className="pt-2 border-t border-[#F4F1EA] flex flex-wrap items-center justify-between gap-2">
                   <span className="text-[11px] font-mono text-[#78716C]">
                     Preview instantly without signup:
                   </span>
@@ -669,7 +655,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
                     className="text-[11px] font-mono font-bold text-[#173C2C] hover:underline px-2.5 py-1 bg-[#F4F1EA] rounded-xs border border-[#DDD7CC] cursor-pointer"
                     id="btn-demo-quick-login"
                   >
-                    ⚡ Quick Demo Login
+                    ⚡ {t.auth.demoLogin}
                   </button>
                 </div>
               </div>
@@ -679,26 +665,26 @@ export const AuthPage: React.FC<AuthPageProps> = ({
             <div className="mt-6 pt-4 border-t border-[#E7E3DA] text-center text-xs text-[#57534E] font-serif">
               {mode === 'login' ? (
                 <p>
-                  Don't have an account yet?{' '}
+                  {t.auth.noAccount}{' '}
                   <button
                     type="button"
                     onClick={() => handleToggleMode('signup')}
                     className="font-sans font-bold text-[#173C2C] hover:underline cursor-pointer"
                     id="switch-to-signup"
                   >
-                    Create Account
+                    {t.auth.signUp}
                   </button>
                 </p>
               ) : mode === 'signup' ? (
                 <p>
-                  Already have an account?{' '}
+                  {t.auth.hasAccount}{' '}
                   <button
                     type="button"
                     onClick={() => handleToggleMode('login')}
                     className="font-sans font-bold text-[#173C2C] hover:underline cursor-pointer"
                     id="switch-to-login"
                   >
-                    Sign In
+                    {t.auth.signIn}
                   </button>
                 </p>
               ) : null}

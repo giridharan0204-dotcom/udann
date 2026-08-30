@@ -4,22 +4,24 @@ import {
   ArrowRight, 
   Coins, 
   WifiOff, 
-  SlidersHorizontal,
-  Compass,
-  CheckCircle2,
-  GraduationCap,
-  Briefcase,
-  Award,
-  ShieldCheck,
-  TrendingUp,
-  ChevronRight,
-  Play,
-  Pause,
-  Video,
-  VideoOff,
-  VolumeX
+  SlidersHorizontal, 
+  Compass, 
+  CheckCircle2, 
+  GraduationCap, 
+  Briefcase, 
+  Award, 
+  ShieldCheck, 
+  TrendingUp, 
+  ChevronRight, 
+  Play, 
+  Pause, 
+  Video, 
+  VideoOff, 
+  VolumeX,
+  Smartphone
 } from 'lucide-react';
 import { AppLanguage } from '../types';
+import { translations } from '../data/translations';
 import heroIllustration from '../assets/images/udaan_journey_hero_1788070390823.jpg';
 
 interface HeroSectionProps {
@@ -45,6 +47,7 @@ const BACKGROUND_VIDEOS = [
 ];
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
+  language,
   openOnboarding,
   exploreOpportunities,
   hasRoadmap,
@@ -56,6 +59,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const t = translations[language] || translations.en;
   const currentVideo = BACKGROUND_VIDEOS[activeVideoIndex];
 
   // Toggle Play / Pause
@@ -75,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <div className="relative overflow-hidden pt-8 pb-16 sm:py-16 lg:py-20 animate-in fade-in duration-300 min-h-[600px]" id="main-content">
+    <div className="relative overflow-hidden pt-6 pb-12 sm:py-16 lg:py-20 animate-in fade-in duration-300 w-full max-w-full" id="main-content">
       
       {/* ================================================== */}
       {/* BACKGROUND VIDEO LAYER & SOPHISTICATED OVERLAYS    */}
@@ -92,7 +96,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             poster={heroIllustration}
             onLoadedData={() => setVideoLoaded(true)}
             className={`w-full h-full object-cover object-center transition-opacity duration-1000 ${
-              videoLoaded ? 'opacity-35 sm:opacity-40 scale-105 filter saturate-75 brightness-95' : 'opacity-0'
+              videoLoaded ? 'opacity-30 sm:opacity-40 scale-105 filter saturate-75 brightness-95' : 'opacity-0'
             }`}
           >
             <source src={currentVideo.url} type="video/mp4" />
@@ -107,75 +111,75 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       {/* Subtle Fallback Radial Ambient Glow */}
       <div 
-        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-[#EAE6DC]/60 via-[#FDFCF8]/20 to-transparent blur-3xl -z-10" 
+        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[500px] bg-gradient-to-b from-[#EAE6DC]/60 via-[#FDFCF8]/20 to-transparent blur-3xl -z-10" 
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         
         {/* Main 2-Column Hero Grid: Narrative Left, 3D Journey Visual Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
           
           {/* Left Column: Core Value Proposition */}
-          <div className="lg:col-span-6 space-y-6 text-left">
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
             
             {/* Signature Journey Stage Tracker */}
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/90 backdrop-blur-md border border-[#DDD7CC] text-[11px] font-mono font-medium text-[#57534E] shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#EA580C] animate-pulse" />
-              <span className="text-[#173C2C] font-bold">YOU ARE HERE</span>
+            <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/90 backdrop-blur-md border border-[#DDD7CC] text-[10px] sm:text-[11px] font-mono font-medium text-[#57534E] shadow-2xs max-w-full">
+              <span className="w-2 h-2 rounded-full bg-[#EA580C] animate-pulse shrink-0" />
+              <span className="text-[#173C2C] font-bold">{t.youAreHere}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="font-semibold text-[#173C2C]">DISCOVER</span>
+              <span className="font-semibold text-[#173C2C]">{t.discover.toUpperCase()}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="font-semibold text-[#173C2C]">LEARN</span>
+              <span className="font-semibold text-[#173C2C]">{t.learn.toUpperCase()}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="text-[#EA580C] font-bold">OPPORTUNITY</span>
+              <span className="text-[#EA580C] font-bold">{t.nextOpportunity.toUpperCase()}</span>
             </div>
 
             {/* Editorial Heading */}
-            <div className="space-y-4">
-              <h1 className="editorial-title text-4xl sm:text-5xl lg:text-6xl font-bold text-[#161616] tracking-tight leading-[1.08]">
-                Your next opportunity starts here.
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="editorial-title text-3xl sm:text-5xl lg:text-6xl font-bold text-[#161616] tracking-tight leading-[1.1]">
+                {t.heroHeadline}
               </h1>
               
-              <p className="text-base sm:text-lg font-serif text-[#3D3A37] leading-relaxed max-w-xl font-normal">
-                Tell us where you are and where you want to go. We'll help you find your next step — without expensive fees, confusing jargon, or impossible prerequisites.
+              <p className="text-sm sm:text-base lg:text-lg font-serif text-[#3D3A37] leading-relaxed max-w-xl font-normal">
+                {t.heroSubtitle}
               </p>
             </div>
 
             {/* Primary Action Row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
               <button
                 type="button"
                 onClick={hasRoadmap ? viewRoadmap : openOnboarding}
-                className="group relative inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-base font-bold shadow-md border border-[#0D241A] cursor-pointer hover:shadow-lg transition-all duration-200"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-sm bg-[#173C2C] hover:bg-[#102B1F] text-[#FDFCF8] text-sm sm:text-base font-bold shadow-md border border-[#0D241A] cursor-pointer hover:shadow-lg transition-all duration-200"
                 id="hero-find-step-btn"
               >
-                <Sparkles className="w-5 h-5 text-[#FBBF24] transition-transform duration-300 group-hover:rotate-12" aria-hidden="true" />
-                <span>Find My Next Step</span>
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#FBBF24] transition-transform duration-300 group-hover:rotate-12" aria-hidden="true" />
+                <span>{hasRoadmap ? t.hero.viewRoadmapBtn : t.hero.findStepBtn}</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </button>
 
               <button
                 type="button"
                 onClick={exploreOpportunities}
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-sm bg-[#FFFFFF]/95 hover:bg-[#F4F1EA] text-[#3D3A37] hover:text-[#161616] text-sm font-semibold border border-[#DDD7CC] shadow-2xs transition-all duration-200 cursor-pointer backdrop-blur-xs"
+                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-sm bg-[#FFFFFF]/95 hover:bg-[#F4F1EA] text-[#3D3A37] hover:text-[#161616] text-xs sm:text-sm font-semibold border border-[#DDD7CC] shadow-2xs transition-all duration-200 cursor-pointer backdrop-blur-xs"
                 id="hero-explore-btn"
               >
                 <Compass className="w-4 h-4 text-[#173C2C]" aria-hidden="true" />
-                <span>Explore Opportunities</span>
+                <span>{t.hero.exploreBtn}</span>
               </button>
             </div>
 
             {/* Trust Micro-Badges & Interactive Ambient Video Control Bar */}
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-              <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-[#57534E]">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-mono text-[#57534E]">
                 <span className="inline-flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#173C2C]" />
-                  <span>100% Free & Open Access</span>
+                  <CheckCircle2 className="w-4 h-4 text-[#173C2C] shrink-0" />
+                  <span>{t.freeFirst}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-[#173C2C]" />
-                  <span>Verified Portals</span>
+                  <ShieldCheck className="w-4 h-4 text-[#173C2C] shrink-0" />
+                  <span>{t.lowData}</span>
                 </span>
               </div>
 
@@ -185,8 +189,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   type="button"
                   onClick={togglePlay}
                   className="p-1 hover:text-[#173C2C] cursor-pointer"
-                  title={isPlaying ? 'Pause Background Video' : 'Play Background Video'}
-                  aria-label={isPlaying ? 'Pause Video' : 'Play Video'}
+                  title={isPlaying ? t.hero.pauseVideo : t.hero.playVideo}
+                  aria-label={isPlaying ? t.hero.pauseVideo : t.hero.playVideo}
                 >
                   {isPlaying ? <Pause className="w-3 h-3 text-[#173C2C]" /> : <Play className="w-3 h-3 text-[#EA580C]" />}
                 </button>
@@ -195,38 +199,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   type="button"
                   onClick={toggleVideoEnabled}
                   className="px-1 hover:text-[#173C2C] cursor-pointer flex items-center gap-1"
-                  title="Toggle Background Motion"
+                  title={isVideoEnabled ? t.hero.hideVideo : t.hero.showVideo}
                 >
                   {isVideoEnabled ? (
                     <>
                       <Video className="w-3 h-3 text-[#173C2C]" />
-                      <span>Live Video</span>
+                      <span>{t.hero.hideVideo}</span>
                     </>
                   ) : (
                     <>
                       <VideoOff className="w-3 h-3 text-[#78716C]" />
-                      <span>Static Mode</span>
+                      <span>{t.hero.showVideo}</span>
                     </>
                   )}
                 </button>
-                <span className="text-[#DDD7CC]">|</span>
-                <span className="flex items-center gap-0.5 text-[9px] text-[#78716C]">
-                  <VolumeX className="w-2.5 h-2.5" />
-                  <span>Muted</span>
-                </span>
               </div>
             </div>
 
           </div>
 
           {/* Right Column: 3D Visual Journey Composition with Floating Cards */}
-          <div className="lg:col-span-6 relative perspective-1000">
+          <div className="lg:col-span-6 relative perspective-1000 w-full">
             
             {/* The Main Journey Visual Card with Layered Depth */}
             <div className="relative rounded-lg overflow-hidden border border-[#E7E3DA] bg-[#FFFFFF]/95 backdrop-blur-md shadow-xl p-3 sm:p-4 group">
               
               {/* Bespoke Editorial Journey Art */}
-              <div className="relative h-64 sm:h-80 md:h-96 w-full rounded-md overflow-hidden bg-[#FAF8F5]">
+              <div className="relative h-56 sm:h-80 md:h-96 w-full rounded-md overflow-hidden bg-[#FAF8F5]">
                 <img
                   src={heroIllustration}
                   alt="A young student moving along an upward luminous trajectory toward education, skill building, and career opportunities"
@@ -236,42 +235,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-[#173C2C]/80 via-transparent to-transparent" />
                 
                 {/* Milestone Overlay Marker */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[#FDFCF8]">
+                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between text-[#FDFCF8]">
                   <div>
                     <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#FBBF24] block">
-                      THE UDAAN PATHWAY
+                      {t.appName}
                     </span>
-                    <span className="editorial-title text-base sm:text-lg font-bold">
-                      Zero Barrier Progression
+                    <span className="editorial-title text-sm sm:text-base lg:text-lg font-bold">
+                      {t.hero.cardHighlight}
                     </span>
                   </div>
-                  <span className="px-2.5 py-1 rounded-xs bg-[#173C2C]/90 backdrop-blur-xs border border-[#FDFCF8]/20 text-[10px] font-mono font-semibold">
-                    Step 1 of 5 Ready
+                  <span className="px-2 sm:px-2.5 py-1 rounded-xs bg-[#173C2C]/90 backdrop-blur-xs border border-[#FDFCF8]/20 text-[10px] font-mono font-semibold">
+                    {t.stepOf.replace('{current}', '1').replace('{total}', '4')}
                   </span>
                 </div>
               </div>
 
               {/* Floating 3D Opportunity Card #1 (Top Right) */}
-              <div className="hidden sm:flex absolute -top-4 -right-4 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] p-3 rounded-md shadow-lg items-center gap-3 animate-float-subtle">
-                <div className="w-8 h-8 rounded-sm bg-[#173C2C] text-[#FDFCF8] flex items-center justify-center shrink-0">
+              <div className="hidden sm:flex absolute -top-3 -right-3 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] p-2.5 sm:p-3 rounded-md shadow-lg items-center gap-2.5 animate-float-subtle">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-[#173C2C] text-[#FDFCF8] flex items-center justify-center shrink-0">
                   <GraduationCap className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-mono uppercase font-bold text-[#EA580C] block">SCHOLARSHIP</span>
-                  <span className="text-xs font-serif font-bold text-[#161616] block">₹50,000 Support</span>
-                  <span className="text-[10px] font-mono text-[#78716C]">PM Higher Ed Scheme</span>
+                  <span className="text-[9px] font-mono uppercase font-bold text-[#EA580C] block">{t.categories.scholarships}</span>
+                  <span className="text-xs font-serif font-bold text-[#161616] block">100% Free Support</span>
                 </div>
               </div>
 
               {/* Floating 3D Opportunity Card #2 (Bottom Left) */}
-              <div className="hidden sm:flex absolute -bottom-4 -left-4 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] p-3 rounded-md shadow-lg items-center gap-3 animate-float-delayed">
-                <div className="w-8 h-8 rounded-sm bg-[#EA580C] text-[#FDFCF8] flex items-center justify-center shrink-0">
+              <div className="hidden sm:flex absolute -bottom-3 -left-3 bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] p-2.5 sm:p-3 rounded-md shadow-lg items-center gap-2.5 animate-float-delayed">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-[#EA580C] text-[#FDFCF8] flex items-center justify-center shrink-0">
                   <Briefcase className="w-4 h-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] font-mono uppercase font-bold text-[#173C2C] block">JOB PREP</span>
-                  <span className="text-xs font-serif font-bold text-[#161616] block">Data & Office Skills</span>
-                  <span className="text-[10px] font-mono text-[#78716C]">100% Free &bull; Mobile Friendly</span>
+                  <span className="text-[9px] font-mono uppercase font-bold text-[#173C2C] block">{t.categories.freeCourses}</span>
+                  <span className="text-xs font-serif font-bold text-[#161616] block">{t.mobileFriendly}</span>
                 </div>
               </div>
 
@@ -285,66 +282,66 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="space-y-6 pt-6 border-t border-[#E7E3DA]">
           <div className="text-left max-w-xl">
             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#173C2C] block">
-              DESIGNED FOR ACCESSIBILITY & DIGNITY
+              {t.builtAroundConstraints.toUpperCase()}
             </span>
             <h2 className="editorial-title text-xl sm:text-2xl font-bold text-[#161616]">
-              Built around your real-life constraints
+              {t.hero.title}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 text-left">
             
             {/* 1. FREE-FIRST */}
-            <div className="card-3d p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
-              <div className="w-10 h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#173C2C]">
+            <div className="card-3d p-5 sm:p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#173C2C]">
                 <Coins className="w-5 h-5 text-[#173C2C]" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#161616]">
-                  1. FREE-FIRST
+                  1. {t.freeFirst}
                 </h3>
-                <p className="editorial-title text-lg font-bold text-[#173C2C] mt-0.5">
-                  Zero Financial Barrier
+                <p className="editorial-title text-base sm:text-lg font-bold text-[#173C2C] mt-0.5">
+                  {t.hero.freeFirstTitle}
                 </p>
               </div>
               <p className="text-xs font-serif text-[#57534E] leading-relaxed">
-                Prioritizes 100% free courses, zero-fee government portals, verified open-source roadmaps, and fully funded scholarship grants.
+                {t.hero.freeFirstDesc}
               </p>
             </div>
 
             {/* 2. LOW-DATA */}
-            <div className="card-3d p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
-              <div className="w-10 h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#173C2C]">
+            <div className="card-3d p-5 sm:p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#173C2C]">
                 <WifiOff className="w-5 h-5 text-[#173C2C]" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#161616]">
-                  2. LOW-DATA
+                  2. {t.lowData}
                 </h3>
-                <p className="editorial-title text-lg font-bold text-[#173C2C] mt-0.5">
-                  Mobile & Offline Ready
+                <p className="editorial-title text-base sm:text-lg font-bold text-[#173C2C] mt-0.5">
+                  {t.hero.lowDataTitle}
                 </p>
               </div>
               <p className="text-xs font-serif text-[#57534E] leading-relaxed">
-                Optimized for basic smartphones, minimal 2G/3G data usage, lightweight downloadable text action plans, and offline execution.
+                {t.hero.lowDataDesc}
               </p>
             </div>
 
             {/* 3. PERSONALIZED */}
-            <div className="card-3d p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
-              <div className="w-10 h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#EA580C]">
-                <SlidersHorizontal className="w-5 h-5 text-[#EA580C]" aria-hidden="true" />
+            <div className="card-3d p-5 sm:p-6 rounded-md bg-[#FFFFFF]/95 backdrop-blur-md border border-[#E7E3DA] space-y-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-sm bg-[#FAF8F5] border border-[#E7E3DA] flex items-center justify-center text-[#EA580C]">
+                <Smartphone className="w-5 h-5 text-[#EA580C]" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#161616]">
-                  3. PERSONALIZED
+                  3. {t.mobileFriendly}
                 </h3>
-                <p className="editorial-title text-lg font-bold text-[#EA580C] mt-0.5">
-                  Tailored to Your Schedule
+                <p className="editorial-title text-base sm:text-lg font-bold text-[#EA580C] mt-0.5">
+                  {t.hero.mobileTitle}
                 </p>
               </div>
               <p className="text-xs font-serif text-[#57534E] leading-relaxed">
-                Evaluates your exact device, budget, and daily available time before spotlighting one clear next step to prevent burnout and confusion.
+                {t.hero.mobileDesc}
               </p>
             </div>
 

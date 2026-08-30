@@ -51,7 +51,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
   onOpenAffordability,
   openOnboarding,
 }) => {
-  const t = translations[language];
+  const t = translations[language] || translations.en;
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
@@ -65,12 +65,12 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
 
   // Categories prioritised: Scholarships, Free Courses, Internships, Jobs, Mentorship
   const categoriesList = [
-    { id: 'all', label: 'All Opportunities', icon: Layers },
-    { id: 'scholarships', label: '🎓 Scholarships', icon: GraduationCap },
-    { id: 'free_courses', label: '📚 Free Courses', icon: BookOpen },
-    { id: 'internships', label: '💼 Internships', icon: Laptop },
-    { id: 'jobs', label: '💻 Jobs', icon: Briefcase },
-    { id: 'mentorship', label: '🧑‍🏫 Mentorship', icon: Users },
+    { id: 'all', label: t.explorer.allCategories, icon: Layers },
+    { id: 'scholarships', label: `🎓 ${t.categories.scholarships}`, icon: GraduationCap },
+    { id: 'free_courses', label: `📚 ${t.categories.freeCourses}`, icon: BookOpen },
+    { id: 'internships', label: `💼 ${t.categories.internships}`, icon: Laptop },
+    { id: 'jobs', label: `💻 ${t.categories.jobs}`, icon: Briefcase },
+    { id: 'mentorship', label: `🧑‍🏫 ${t.categories.mentorship}`, icon: Users },
   ];
 
   // Filter logic
@@ -156,20 +156,20 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-200" id="main-content">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-in fade-in duration-200" id="main-content">
       
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E7E3DA] pb-6">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs bg-[#F4F1EA] text-[#173C2C] text-[10px] font-mono font-bold border border-[#DDD7CC] uppercase tracking-widest mb-2">
             <ShieldCheck className="w-3.5 h-3.5 text-[#B45309]" />
-            <span>VERIFIED OFFICIAL PORTALS &bull; TRUSTED LINKS ONLY</span>
+            <span>{t.explorer.verifiedOfficial}</span>
           </div>
           <h1 className="editorial-title text-2xl sm:text-3xl font-bold text-[#161616] tracking-tight">
-            Explore Opportunities
+            {t.explorer.title}
           </h1>
           <p className="text-xs sm:text-sm text-[#57534E] mt-1 max-w-2xl font-serif">
-            Direct access to official scholarships, government portals, free learning platforms, and verified student internships.
+            {t.explorer.subtitle}
           </p>
         </div>
 
@@ -178,16 +178,16 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
           <div className="p-3 bg-[#F4F1EA] rounded-xs border border-[#DDD7CC] text-xs text-[#173C2C] flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#B45309] shrink-0" aria-hidden="true" />
             <span className="font-mono text-[11px]">
-              Matching your budget ({profile.monthlyBudget === 'zero' ? '₹0' : profile.monthlyBudget}) & {profile.dailyHours.replace('_', ' ')}/day.
+              Matching budget: {profile.monthlyBudget === 'zero' ? '₹0' : profile.monthlyBudget} &bull; {profile.dailyHours.replace('_', ' ')}/day
             </span>
           </div>
         ) : (
           <button
             onClick={openOnboarding}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-[#B45309] text-[#FDFCF8] text-xs font-semibold shadow-2xs hover:bg-[#92400E] border border-[#9A3412] transition-all"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-[#B45309] text-[#FDFCF8] text-xs font-semibold shadow-2xs hover:bg-[#92400E] border border-[#9A3412] transition-all cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Set Profile for "Good Fit" Badges</span>
+            <span>{t.explorer.setProfileNotice}</span>
           </button>
         )}
       </div>
@@ -202,7 +202,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
               role="tab"
               aria-selected={isSelected}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xs text-xs font-semibold font-mono shrink-0 transition-all border ${
+              className={`px-3.5 sm:px-4 py-2 rounded-xs text-xs font-semibold font-mono shrink-0 transition-all border cursor-pointer ${
                 isSelected
                   ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C] shadow-2xs'
                   : 'bg-[#FFFFFF] text-[#44403C] border-[#E7E3DA] hover:bg-[#F4F1EA]'
@@ -216,7 +216,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
       </div>
 
       {/* Search & Simple Filter Pills Bar */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           
           {/* Search Input */}
@@ -226,14 +226,14 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by topic, skill (e.g. Python, Web, Excel), portal or provider..."
+              placeholder={t.searchPlaceholder}
               className="w-full pl-10 pr-10 py-2.5 rounded-xs border border-[#DDD7CC] bg-[#FFFFFF] text-sm text-[#161616] placeholder-[#A8A29E] focus-visible:ring-2 focus-visible:ring-[#173C2C]"
               aria-label="Search opportunities"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#78716C] hover:text-[#161616]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#78716C] hover:text-[#161616] cursor-pointer"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -244,15 +244,15 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
           {/* Quick "Only Good Fit" Toggle */}
           <button
             onClick={() => setOnlyGoodFit(!onlyGoodFit)}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xs text-xs font-semibold border transition-all ${
+            className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xs text-xs font-semibold border transition-all cursor-pointer ${
               onlyGoodFit
                 ? 'bg-[#F4F1EA] border-[#173C2C] text-[#173C2C]'
                 : 'bg-[#FFFFFF] border-[#DDD7CC] text-[#44403C] hover:bg-[#F4F1EA]'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#B45309]" aria-hidden="true" />
-            <span>Good Fit For Me</span>
-            {onlyGoodFit && <span className="text-xs">✓</span>}
+            <span>{t.goodFit}</span>
+            {onlyGoodFit && <span className="text-xs font-bold">✓</span>}
           </button>
 
         </div>
@@ -260,21 +260,21 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
         {/* 4 Simple Quick Filters: Free, Low Data, Beginner, Mobile Friendly */}
         <div className="flex flex-wrap items-center gap-2 pt-1">
           <span className="text-[10px] font-mono uppercase font-bold text-[#78716C] mr-1">
-            Filter by:
+            {t.filter}:
           </span>
 
           {/* FREE Filter */}
           <button
             type="button"
             onClick={() => setCostFilter(costFilter === 'free' ? 'all' : 'free')}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all cursor-pointer ${
               costFilter === 'free'
                 ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C]'
                 : 'bg-[#FFFFFF] text-[#44403C] border-[#E7E3DA] hover:bg-[#FAF8F5]'
             }`}
           >
             <Coins className="w-3 h-3" />
-            <span>FREE (₹0)</span>
+            <span>{t.freeFirst} (₹0)</span>
             {costFilter === 'free' && <span>✓</span>}
           </button>
 
@@ -282,14 +282,14 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
           <button
             type="button"
             onClick={() => setDataFilter(dataFilter === 'low_data' ? 'all' : 'low_data')}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all cursor-pointer ${
               dataFilter === 'low_data'
                 ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C]'
                 : 'bg-[#FFFFFF] text-[#44403C] border-[#E7E3DA] hover:bg-[#FAF8F5]'
             }`}
           >
             <WifiOff className="w-3 h-3" />
-            <span>LOW DATA</span>
+            <span>{t.lowData.toUpperCase()}</span>
             {dataFilter === 'low_data' && <span>✓</span>}
           </button>
 
@@ -297,14 +297,14 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
           <button
             type="button"
             onClick={() => setLevelFilter(levelFilter === 'beginner' ? 'all' : 'beginner')}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all cursor-pointer ${
               levelFilter === 'beginner'
                 ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C]'
                 : 'bg-[#FFFFFF] text-[#44403C] border-[#E7E3DA] hover:bg-[#FAF8F5]'
             }`}
           >
             <Layers className="w-3 h-3" />
-            <span>BEGINNER</span>
+            <span>{t.beginner.toUpperCase()}</span>
             {levelFilter === 'beginner' && <span>✓</span>}
           </button>
 
@@ -312,14 +312,14 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
           <button
             type="button"
             onClick={() => setMobileOnlyFilter(!mobileOnlyFilter)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-mono font-semibold border transition-all cursor-pointer ${
               mobileOnlyFilter
                 ? 'bg-[#173C2C] text-[#FDFCF8] border-[#173C2C]'
                 : 'bg-[#FFFFFF] text-[#44403C] border-[#E7E3DA] hover:bg-[#FAF8F5]'
             }`}
           >
             <Smartphone className="w-3 h-3" />
-            <span>MOBILE FRIENDLY</span>
+            <span>{t.mobileFriendly.toUpperCase()}</span>
             {mobileOnlyFilter && <span>✓</span>}
           </button>
 
@@ -328,28 +328,28 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
             <button
               type="button"
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1 text-xs font-mono font-bold text-[#B45309] hover:underline ml-auto"
+              className="inline-flex items-center gap-1 text-xs font-mono font-bold text-[#B45309] hover:underline ml-auto cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" />
-              <span>Reset Filters</span>
+              <span>{t.explorer.resetFilters}</span>
             </button>
           )}
         </div>
       </div>
 
       {/* Showing count indicator */}
-      <div className="flex items-center justify-between text-xs text-[#78716C] font-mono border-b border-[#E7E3DA] pb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-[#78716C] font-mono border-b border-[#E7E3DA] pb-2">
         <span>
-          Showing <strong>{filteredOpportunities.length}</strong> verified opportunities
+          {t.explorer.showingCount.replace('{count}', filteredOpportunities.length.toString())}
         </span>
         <span>
-          Source: Official Websites & Government Portals
+          {t.explorer.sourceOfficial}
         </span>
       </div>
 
       {/* Opportunities Grid */}
       {filteredOpportunities.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 sm:gap-6">
           {filteredOpportunities.map((opp) => (
             <OpportunityCard
               key={opp.id}
@@ -366,7 +366,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
         </div>
       ) : (
         /* Empty State */
-        <div className="p-12 text-center bg-[#FFFFFF] rounded-xs border border-dashed border-[#DDD7CC] space-y-4">
+        <div className="p-8 sm:p-12 text-center bg-[#FFFFFF] rounded-xs border border-dashed border-[#DDD7CC] space-y-4">
           <div className="w-12 h-12 rounded-full bg-[#F4F1EA] text-[#78716C] flex items-center justify-center mx-auto">
             <Search className="w-5 h-5" />
           </div>
@@ -375,16 +375,16 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
               {t.noResultsFound}
             </h3>
             <p className="text-xs text-[#57534E] mt-1 max-w-sm mx-auto font-serif">
-              Try adjusting your search terms or resetting filters to see more verified scholarships and free courses.
+              {t.explorer.emptyDesc}
             </p>
           </div>
           <button
             type="button"
             onClick={handleResetFilters}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-xs font-semibold shadow-2xs hover:bg-[#102B1F]"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-xs font-semibold shadow-2xs hover:bg-[#102B1F] cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Filters</span>
+            <span>{t.explorer.resetFilters}</span>
           </button>
         </div>
       )}
@@ -394,10 +394,10 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
         <ShieldCheck className="w-5 h-5 text-[#173C2C] shrink-0 mt-0.5" aria-hidden="true" />
         <div className="space-y-1">
           <p className="text-xs font-mono font-bold text-[#161616] uppercase">
-            Official Source Guarantee
+            {t.explorer.guaranteeTitle}
           </p>
           <p className="text-xs text-[#57534E] font-serif">
-            All "View Opportunity →" links direct to authentic government portals (e.g. scholarships.gov.in, swayam.gov.in, aicte-india.org, ncs.gov.in) and verified non-profit platforms (e.g. freecodecamp.org, adplist.org, mentortogether.org). UDAAN never charges application fees or collects sensitive credentials.
+            {t.explorer.guaranteeDesc}
           </p>
         </div>
       </div>
