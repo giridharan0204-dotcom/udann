@@ -103,7 +103,7 @@ Why it fits: Free, Low Data, Mobile-friendly, Fits your daily schedule.
 
 FULL 4-STAGE ACTION SEQUENCE:
 ${roadmap.weeks.map(w => `
-[${w.stageName.toUpperCase()}] Week ${w.weekNumber}: ${w.title}
+[${(w.stageName || '').toUpperCase()}] Week ${w.weekNumber}: ${w.title}
 Key Milestone: ${w.keyOutcome}
 Tasks:
 ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'} ${idx + 1}. ${t.title} (${t.estimatedMinutes}m, Cost: ${t.cost}, Data: ${t.dataRequirement})`).join('\n')}
@@ -167,7 +167,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E7E3DA] pb-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[#173C2C] text-[#FDFCF8] text-[11px] font-mono font-bold uppercase tracking-wider shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#FBBF24]" />
-            <span>{t.nav.myNextStep.toUpperCase()}</span>
+            <span>{(t.nav?.myNextStep || t.myNextStep || 'MY NEXT STEP').toUpperCase()}</span>
           </div>
           <span className="text-xs font-mono text-[#57534E] bg-[#FAF8F5] px-3 py-1 rounded-sm border border-[#E7E3DA]">
             Stage: <strong className="text-[#161616]">{activeStageName}</strong> &bull; Week {currentNextTask?.weekNum || 1}
@@ -241,7 +241,7 @@ ${w.tasks.map((t, idx) => `  ${completedTaskIds.includes(t.id) ? '[✓]' : '[ ]'
               <span>{t.realityCheck}</span>
             </span>
             <span className="text-xs font-mono text-[#173C2C] font-bold px-2 py-0.5 bg-[#FFFFFF] rounded-xs border border-[#DDD7CC] shadow-2xs">
-              {allFit ? `${t.goodFit.toUpperCase()} ✓` : 'VERIFIED MATCH'}
+              {allFit ? `${(t.goodFit || t.card?.goodFit || 'GOOD FIT FOR YOU').toUpperCase()} ✓` : 'VERIFIED MATCH'}
             </span>
           </div>
 

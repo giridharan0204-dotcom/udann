@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({
             </p>
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xs bg-[#242424] text-[#E7E3DA] text-[10px] font-mono font-semibold border border-[#383838]">
               <Feather className="w-3.5 h-3.5 text-[#A7F3D0]" aria-hidden="true" />
-              <span>{t.builtAroundConstraints.toUpperCase()}</span>
+              <span>{(t.builtAroundConstraints || '').toUpperCase()}</span>
             </div>
           </div>
 

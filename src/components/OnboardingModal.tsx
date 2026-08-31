@@ -109,7 +109,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         <div className="px-5 sm:px-6 py-4 border-b border-[#E7E3DA] bg-[#FAF8F5] flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#173C2C] block">
-              {t.findNextStep.toUpperCase()}
+              {(t.findNextStep || 'FIND MY NEXT STEP').toUpperCase()}
             </span>
             <span className="text-xs font-mono font-semibold text-[#57534E]">
               Step {step} of {totalSteps}

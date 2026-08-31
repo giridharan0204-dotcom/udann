@@ -128,11 +128,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span className="w-2 h-2 rounded-full bg-[#EA580C] animate-pulse shrink-0" />
               <span className="text-[#173C2C] font-bold">{t.youAreHere}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="font-semibold text-[#173C2C]">{t.discover.toUpperCase()}</span>
+              <span className="font-semibold text-[#173C2C]">{(t.discover || 'DISCOVER').toUpperCase()}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="font-semibold text-[#173C2C]">{t.learn.toUpperCase()}</span>
+              <span className="font-semibold text-[#173C2C]">{(t.learn || 'LEARN').toUpperCase()}</span>
               <span className="text-[#A8A29E]">→</span>
-              <span className="text-[#EA580C] font-bold">{t.nextOpportunity.toUpperCase()}</span>
+              <span className="text-[#EA580C] font-bold">{(t.nextOpportunity || 'OPPORTUNITY').toUpperCase()}</span>
             </div>
 
             {/* Editorial Heading */}
@@ -282,7 +282,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="space-y-6 pt-6 border-t border-[#E7E3DA]">
           <div className="text-left max-w-xl">
             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#173C2C] block">
-              {t.builtAroundConstraints.toUpperCase()}
+              {(t.builtAroundConstraints || 'BUILT AROUND REAL-WORLD CONSTRAINTS').toUpperCase()}
             </span>
             <h2 className="editorial-title text-xl sm:text-2xl font-bold text-[#161616]">
               {t.hero.title}

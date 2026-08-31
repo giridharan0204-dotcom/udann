@@ -289,7 +289,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
             }`}
           >
             <WifiOff className="w-3 h-3" />
-            <span>{t.lowData.toUpperCase()}</span>
+            <span>{(t.lowData || '').toUpperCase()}</span>
             {dataFilter === 'low_data' && <span>✓</span>}
           </button>
 
@@ -304,7 +304,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
             }`}
           >
             <Layers className="w-3 h-3" />
-            <span>{t.beginner.toUpperCase()}</span>
+            <span>{(t.beginner || '').toUpperCase()}</span>
             {levelFilter === 'beginner' && <span>✓</span>}
           </button>
 
@@ -319,7 +319,7 @@ export const OpportunityExplorer: React.FC<OpportunityExplorerProps> = ({
             }`}
           >
             <Smartphone className="w-3 h-3" />
-            <span>{t.mobileFriendly.toUpperCase()}</span>
+            <span>{(t.mobileFriendly || '').toUpperCase()}</span>
             {mobileOnlyFilter && <span>✓</span>}
           </button>
 

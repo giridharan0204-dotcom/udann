@@ -83,14 +83,14 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({
 
             {/* Level Tag */}
             <span className="px-2 py-0.5 rounded-xs bg-[#FAF8F5] text-[#57534E] text-[10px] font-mono font-medium border border-[#E7E3DA] capitalize">
-              {opportunity.level === 'beginner' ? t.beginner : opportunity.level}
+              {opportunity.level === 'beginner' ? (t.beginner || 'Beginner') : opportunity.level}
             </span>
 
             {/* "GOOD FIT FOR YOU ✓" */}
             {isGoodFit && (
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-xs bg-[#173C2C] text-[#FDFCF8] text-[10px] font-mono font-bold">
                 <Sparkles className="w-3 h-3 text-[#FDFCF8]" aria-hidden="true" />
-                <span>{t.goodFit.toUpperCase()} ✓</span>
+                <span>{(t.goodFit || t.card?.goodFit || 'GOOD FIT FOR YOU').toUpperCase()} ✓</span>
               </span>
             )}
           </div>

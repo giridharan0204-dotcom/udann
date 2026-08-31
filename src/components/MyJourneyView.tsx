@@ -74,7 +74,7 @@ export const MyJourneyView: React.FC<MyJourneyViewProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E7E3DA] pb-6">
         <div>
           <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#173C2C] block">
-            {t.nav.myJourney.toUpperCase()}
+            {(t.nav?.myJourney || t.myJourney || 'MY JOURNEY').toUpperCase()}
           </span>
           <h1 className="editorial-title text-2xl sm:text-3xl lg:text-4xl font-bold text-[#161616]">
             Where You Stand Today
